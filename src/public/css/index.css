@@ -1,10 +1,88 @@
 .content {
-  margin: 10px auto;
-  width: 80vw;
+  margin: 20px auto;
+  width: 85vw;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .shop_card {
-  width: 130px;
-  margin: 10px;
+  max-width: 320px;
+  min-width: 280px;
+  width: 20vw;
+  margin: 10px 5px;
+  box-shadow: 0 5px 5px 0 #6c6b6b;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.shop_card img {
+  width: 100%;
+}
+
+.shop_contents {
+  background-color: white;
+  padding: 15px;
+}
+
+.shop_name {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.shop_tag {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.form_buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.shop_detail button {
+  background-color: rgb(58, 103, 250);
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+}
+
+/* お気に入りボタン */
+.favorite_button {
+  width: 28px;
+  height: 28px;
+  position: relative;
+  background-color: transparent;
+  border: none;
+}
+
+.favorite_button::before,
+.favorite_button::after {
+  content: "";
+  width: 50%;
+  height: 80%;
+  top: 10%;
+  background-color: gainsboro;
+  border-radius: 7px 7px 0 0;
+  display: block;
+  position: absolute;
+  cursor: pointer;
+    transition: background-color 1s;
+}
+
+.favorite_button::before{
+  transform: rotate(-45deg);
+  left: 14%;
+}
+
+.favorite_button::after {
+  transform: rotate(45deg);
+  right: 14%;
+}
+
+.favorite_button::focus,
+.favorite_button::active {
+  background-color: red;
+  transition: none;
 }

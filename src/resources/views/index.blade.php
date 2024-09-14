@@ -11,23 +11,27 @@
       <div class="shop_img">
         <img src="{{ $shop->img_url ?? '画像がありません' }}" alt="{{ $shop->name ?? '' }}">
       </div>
-      <div class="shop_name">
-        {{ $shop->name ?? '' }}
-      </div>
-      <div class="shop_tag">
-        #{{ $shop->area ?? '' }}
-        #{{ $shop->category ?? ''}}
-      </div>
-      <div class="shop_detail">
-        <form action="" method="post">
-          <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-          <button type="submit">詳しくみる</button>
-        </form>
-      </div>
-      <div class="favorite">
-        <form action="/favorite" method="post">
-          <button type="submit">heart</button>
-        </form>
+      <div class="shop_contents">
+        <div class="shop_name">
+          {{ $shop->name ?? '' }}
+        </div>
+        <div class="shop_tag">
+          #{{ $shop->area ?? '' }}
+          #{{ $shop->category ?? ''}}
+        </div>
+        <div class="form_buttons">
+          <div class="shop_detail">
+            <form action="" method="post" value="{{ $shop->id }}">
+              <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+              <button type="submit">詳しくみる</button>
+            </form>
+          </div>
+          <div class="favorite">
+            <form action="/favorite" method="post">
+              <button class="favorite_button" type="submit"></button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   @endforeach
