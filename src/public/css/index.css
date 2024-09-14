@@ -1,0 +1,10 @@
+.content {
+  margin: 10px auto;
+  width: 80vw;
+  display: flex;
+}
+
+.shop_card {
+  width: 130px;
+  margin: 10px;
+}
