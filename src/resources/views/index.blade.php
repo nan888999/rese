@@ -5,7 +5,7 @@
 @endsection
 
 @section('main')
-<div class="content">
+<div class="contents">
   @foreach($shops as $shop)
     <div class="shop_card">
       <div class="shop_img">

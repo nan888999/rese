@@ -7,7 +7,7 @@
 @section('title','Registration')
 
 @section('main')
-<div class="content">
+<div class="contents">
   <form action="/register" class="register_form" method="post">
     @csrf
     <input type="text" name="name" placeholder="Username" value="{{ old('name') }}">

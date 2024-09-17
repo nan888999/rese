@@ -24,7 +24,7 @@ class UserController extends Controller
 
         Auth::login($user);
 
-        return redirect('/login');
+        return view('auth.thanks');
     }
 
     public function showLogin()

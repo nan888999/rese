@@ -10,25 +10,12 @@ class ShopController extends Controller
 {
     public function getShopsView(Request $request)
     {
-        $shops = Shop::select('id', 'name', 'area', 'category', 'img_url')->get();
-        $shops->map(function ($shop) {
-            $areaMapping = [
-                1 => '東京都',
-                2 => '大阪府',
-                3 => '福岡県',
-            ];
-            $shop->area = $areaMapping[$shop->area] ?? '';
-        });
-        $shops->map(function ($shop) {
-            $categoryMapping = [
-                1 =>'イタリアン',
-                2 =>'ラーメン',
-                3 =>'居酒屋',
-                4 =>'寿司',
-                5 =>'焼肉',
-            ];
-            $shop->category = $categoryMapping[$shop->category] ?? '';
-        });
+        $shops = Shop::select('id', 'name', 'area_id', 'category_id', 'img_url')->get();
         return view('index', compact('shops'));
+    }
+
+    public function viewShopDetails()
+    {
+        $shop = Shop::select('id');
     }
 }

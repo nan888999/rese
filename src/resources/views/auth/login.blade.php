@@ -7,7 +7,7 @@
 @section('title','Login')
 
 @section('main')
-<div class="content">
+<div class="contents">
   <form action="/login" class="login_form" method="post">
     @csrf
     <input type="text" name="email" placeholder="Email" placeholder="{{ old('email') }}">
