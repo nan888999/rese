@@ -46,6 +46,13 @@
   padding: 5px 10px;
   border: none;
   border-radius: 3px;
+  cursor: pointer;
+}
+
+.shop_detail_button:focus,
+.shop_detail_button:active,
+.shop_detail_button:hover {
+  background-color: blue;
 }
 
 /* お気に入りボタン */
@@ -68,7 +75,7 @@
   display: block;
   position: absolute;
   cursor: pointer;
-    transition: background-color 1s;
+    transition: background-color 0.3s;
 }
 
 .favorite_button::before{
@@ -81,8 +88,11 @@
   right: 14%;
 }
 
-.favorite_button::focus,
-.favorite_button::active {
+.favorite_button:focus::before,
+.favorite_button:active::before,
+.favorite_button:hover::before,
+.favorite_button:focus::after,
+.favorite_button:active::after,
+.favorite_button:hover::after {
   background-color: red;
-  transition: none;
 }

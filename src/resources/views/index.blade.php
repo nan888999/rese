@@ -23,7 +23,7 @@
           <div class="shop_detail">
             <form action="" method="post" value="{{ $shop->id }}">
               <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-              <button type="submit">詳しくみる</button>
+              <button class="shop_detail_button" type="submit">詳しくみる</button>
             </form>
           </div>
           <div class="favorite">
