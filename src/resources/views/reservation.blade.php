@@ -9,14 +9,14 @@
   <div class="shop_information">
     <div class="shop_name">
       <a href="/"><</a>
-      <h2>{{ $shop->name }}</h2>
+      <h2>{{ $shop['name'] }}</h2>
     </div>
     <div class="tags">
-      #{{ $shop->area }}
+      #{{ $area['name'] }}
       #{{ $shop->category }}
-    </div>  
+    </div>
     <div class="shop_detail">
-      {{ $shop->detail }}
+      {{ $shop['detail'] }}
     </div>
   </div>
 

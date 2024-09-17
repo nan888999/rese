@@ -11,17 +11,17 @@ class Shop extends Model
 
     protected $fillable = [
         'name',
-        'area',
-        'category',
+        'area_id',
+        'category_id',
     ];
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
 
     public function area()
     {
-        return $this->belongsTo(Area::class);
+        return $this->belongsTo(Area::class, 'area_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }

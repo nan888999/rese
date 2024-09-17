@@ -13,11 +13,11 @@
       </div>
       <div class="shop_contents">
         <div class="shop_name">
-          {{ $shop->name ?? '' }}
+          {{ $shop['name'] ?? '' }}
         </div>
         <div class="shop_tag">
-          #{{ $shop->area ?? '' }}
-          #{{ $shop->category ?? ''}}
+          #{{ $shop->area->name ?? '' }}
+          #{{ $shop->category->name ?? ''}}
         </div>
         <div class="form_buttons">
           <div class="shop_detail">
