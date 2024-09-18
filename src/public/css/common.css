@@ -1,9 +1,51 @@
 body {
   background-color: gainsboro;
+  margin-top: 50px;
 }
 
-.header__title {
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+input, select {
+  height: 25px;
+  border: none;
+  border-radius: 3px;
+  margin: 5px 0;
+  padding: 5px;
+}
+
+.header_title {
   font-size: 20px;
   font-weight: 600;
   color: rgb(58, 103, 250);
+}
+
+.common_btn {
+  background-color: rgb(58, 103, 250);
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.common_btn:focus,
+.common_btn:active,
+.common_btn:hover {
+  background-color: blue;
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    margin: 10px auto;
+  }
 }

@@ -4,6 +4,10 @@
 <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
 @endsection
 
+@section('header')
+<div class="header_title">Rese</div>
+@endsection
+
 @section('title','Registration')
 
 @section('main')
@@ -14,7 +18,7 @@
     <input type="email" name="email" placeholder="Email" value="{{ old('email') }}">
     <input type="password" name="password" placeholder="Password" value="{{ old('password') }}">
     <input type="password" name="confirmation_password" placeholder="Confirmation Password" value="{{ old('confirmation_password') }}">
-    <button type="submit" class="register_button">登録</button>
+    <button type="submit" class="common_btn">登録</button>
   </form>
 </div>
 @endsection

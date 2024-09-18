@@ -15,8 +15,10 @@ class ShopController extends Controller
         return view('index', compact('shops'));
     }
 
-    public function viewShopDetails()
+    public function viewShopDetails(Request $request)
     {
-        $shop = Shop::select('id');
+        $shop_id = $request->input('shop_id');
+        $shop = Shop::where('id', $shop_id)->first();
+        return view('reservation', compact('shop'));
     }
 }

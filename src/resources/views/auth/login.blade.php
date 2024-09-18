@@ -4,6 +4,10 @@
 <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
 @endsection
 
+@section('header')
+<div class="header_title">Rese</div>
+@endsection
+
 @section('title','Login')
 
 @section('main')
@@ -12,7 +16,7 @@
     @csrf
     <input type="text" name="email" placeholder="Email" placeholder="{{ old('email') }}">
     <input type="password" name="password" placeholder="Password" value="{{ old('password') }}">
-    <button type="submit" class="login_button">ログイン</button>
+    <button type="submit" class="common_btn">ログイン</button>
   </form>
 </div>
 @endsection

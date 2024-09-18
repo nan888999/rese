@@ -7,7 +7,6 @@
 }
 
 .shop_card {
-  max-width: 320px;
   min-width: 280px;
   width: 20vw;
   margin: 10px 5px;
@@ -40,21 +39,6 @@
   justify-content: space-between;
 }
 
-.shop_detail button {
-  background-color: rgb(58, 103, 250);
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.shop_detail_button:focus,
-.shop_detail_button:active,
-.shop_detail_button:hover {
-  background-color: blue;
-}
-
 /* お気に入りボタン */
 .favorite_button {
   width: 28px;
@@ -75,7 +59,7 @@
   display: block;
   position: absolute;
   cursor: pointer;
-    transition: background-color 0.3s;
+  transition: background-color 0.3s;
 }
 
 .favorite_button::before{

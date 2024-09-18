@@ -10,10 +10,7 @@
 </head>
 <body>
   <header class="header">
-    <div class="header__inner">
-      <div class="header__title">Rese</div>
-      @yield('header')
-    </div>
+    @yield('header')
   </header>
   @if(session('message'))
     <div class="alert">

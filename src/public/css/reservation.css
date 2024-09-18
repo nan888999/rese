@@ -1,0 +1,133 @@
+.contents {
+  display: flex;
+  justify-content: center;
+}
+
+/* shop情報 */
+.shop_details {
+  width: 40vw;
+  margin: 5px 7vw 5px 0;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: rgb(58, 103, 250);
+}
+
+.shop_name {
+  display: flex;
+  align-items: center;
+}
+
+.return_btn {
+  margin-right: 10px;
+  display: inline-block;
+  padding: 1px 8px;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 3px 3px 0 gray;
+}
+
+.shop_img img {
+  width: 100%;
+}
+
+.shop_tags {
+  margin: 10px 0;
+}
+
+/* 予約フォーム */
+.reservation_form {
+  width: 40vw;
+  background-color: rgb(58, 103, 250);
+  border-radius: 3px;
+  box-shadow: 0 3px 3px 0 gray;
+  color: white;
+  padding: 0 20px;
+  position: relative;
+}
+
+input.date_form {
+  width: 20vw;
+}
+
+input.time_form,
+select.number_form {
+  width: 35vw;
+}
+
+.confirm__table {
+  background-color: rgb(109, 142, 251);
+  width: 32vw;
+  margin: 20px 0;
+  border-radius: 3px;
+}
+
+.confirm__table--header {
+  font-weight: 400;
+  text-align: left;
+  width: 120px;
+  padding: 5px 15px;
+}
+
+.reservation_btn {
+  width: 40vw;
+  background-color: blue;
+  border: none;
+  color: white;
+  margin-left: -20px;
+  border-radius: 0 0 3px 3px;
+  padding: 10px 0;
+  position: absolute;
+  bottom: 0;
+}
+
+.reservation_btn:focus,
+.reservation_btn:active,
+.reservation_btn:hover {
+  background-color: rgba(85, 85, 249, 0.802);
+}
+
+@media screen and (max-width: 768px) {
+  .contents {
+    display: block;
+  }
+  .shop_details {
+    width: 80vw;
+    margin: 0 auto;
+  }
+  .reservation_form {
+    margin: 40px auto;
+    padding: 20px 20px 0 20px;
+    width: 80vw;
+  }
+  input.date_form,
+  input.time_form,
+  select.number_form,
+  .confirm__table {
+    width: 50vw;
+  }
+  .confirm__table--header {
+    width: 100px;
+  }
+  .reservation_btn {
+    width: 80vw;
+    position: relative;
+  }
+}
+
+/* done.blade.php */
+.done {
+  margin: 20px auto;
+  background-color: white;
+  border: solid 1px lightgray;
+  border-radius: 3px;
+  box-shadow: 0 3px 3px 0 gray;  padding: 12vw 7vw;
+  width: 50vw;
+  text-align: center;
+}
+
+.done_text {
+  margin: 20px auto;
+}
