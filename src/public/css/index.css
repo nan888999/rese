@@ -1,4 +1,4 @@
-.contents {
+.main {
   margin: 20px auto;
   width: 85vw;
   display: flex;
@@ -6,41 +6,41 @@
   justify-content: space-between;
 }
 
-.shop_card {
-  min-width: 280px;
+.shop-card {
+  min-width: 260px;
   width: 20vw;
-  margin: 10px 5px;
+  margin: 10px auto;
   box-shadow: 0 5px 5px 0 #6c6b6b;
   border-radius: 5px;
   overflow: hidden;
 }
 
-.shop_card img {
+.shop__img img {
   width: 100%;
 }
 
-.shop_contents {
+.shop__contents {
   background-color: white;
   padding: 15px;
 }
 
-.shop_name {
+.shop__name {
   font-size: 18px;
   font-weight: 600;
 }
 
-.shop_tag {
+.shop__tags {
   font-size: 12px;
   margin-bottom: 10px;
 }
 
-.form_buttons {
+.form-buttons {
   display: flex;
   justify-content: space-between;
 }
 
 /* お気に入りボタン */
-.favorite_button {
+.favorite-btn {
   width: 28px;
   height: 28px;
   position: relative;
@@ -48,8 +48,8 @@
   border: none;
 }
 
-.favorite_button::before,
-.favorite_button::after {
+.favorite-btn::before,
+.favorite-btn::after {
   content: "";
   width: 50%;
   height: 80%;
@@ -62,21 +62,21 @@
   transition: background-color 0.3s;
 }
 
-.favorite_button::before{
+.favorite-btn::before{
   transform: rotate(-45deg);
   left: 14%;
 }
 
-.favorite_button::after {
+.favorite-btn::after {
   transform: rotate(45deg);
   right: 14%;
 }
 
-.favorite_button:focus::before,
-.favorite_button:active::before,
-.favorite_button:hover::before,
-.favorite_button:focus::after,
-.favorite_button:active::after,
-.favorite_button:hover::after {
+.favorite-btn:focus::before,
+.favorite-btn:active::before,
+.favorite-btn:hover::before,
+.favorite-btn:focus::after,
+.favorite-btn:active::after,
+.favorite-btn:hover::after {
   background-color: red;
 }

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.after_auth')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/reservation.css') }}">

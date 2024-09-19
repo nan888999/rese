@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function (){
   Route::get('/', [ShopController::class, 'getShopsView']);
 });
 
-Route::post('/logout', [UserController::class, 'logout']);
+Route::get('/logout', [UserController::class, 'logout']);
 
 Route::get('/shop_details', [ShopController::class, 'viewShopDetails']);
 

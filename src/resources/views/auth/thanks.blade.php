@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.before_auth')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('auth.css') }}">
