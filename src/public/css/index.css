@@ -40,7 +40,8 @@
 }
 
 /* お気に入りボタン */
-.favorite-btn {
+.favorite-btn--on,
+.favorite-btn--off {
   width: 28px;
   height: 28px;
   position: relative;
@@ -48,13 +49,14 @@
   border: none;
 }
 
-.favorite-btn::before,
-.favorite-btn::after {
+.favorite-btn--on::before,
+.favorite-btn--on::after,
+.favorite-btn--off::before,
+.favorite-btn--off::after {
   content: "";
   width: 50%;
   height: 80%;
   top: 10%;
-  background-color: gainsboro;
   border-radius: 7px 7px 0 0;
   display: block;
   position: absolute;
@@ -62,21 +64,42 @@
   transition: background-color 0.3s;
 }
 
-.favorite-btn::before{
+.favorite-btn--on::before,
+.favorite-btn--on::after {
+  background-color: red;
+}
+
+.favorite-btn--off::before,
+.favorite-btn--off::after {
+  background-color: gainsboro;
+}
+
+.favorite-btn--on::before,
+.favorite-btn--off::before {
   transform: rotate(-45deg);
   left: 14%;
 }
 
-.favorite-btn::after {
+.favorite-btn--on::after,
+.favorite-btn--off::after {
   transform: rotate(45deg);
   right: 14%;
 }
 
-.favorite-btn:focus::before,
-.favorite-btn:active::before,
-.favorite-btn:hover::before,
-.favorite-btn:focus::after,
-.favorite-btn:active::after,
-.favorite-btn:hover::after {
+.favorite-btn--on:focus::before,
+.favorite-btn--on:active::before,
+.favorite-btn--on:hover::before,
+.favorite-btn--on:focus::after,
+.favorite-btn--on:active::after,
+.favorite-btn--on:hover::after {
+  background-color: gainsboro;
+}
+
+.favorite-btn--off:focus::before,
+.favorite-btn--off:active::before,
+.favorite-btn--off:hover::before,
+.favorite-btn--off:focus::after,
+.favorite-btn--off:active::after,
+.favorite-btn--off:hover::after {
   background-color: red;
 }

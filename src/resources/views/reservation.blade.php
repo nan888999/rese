@@ -26,45 +26,76 @@
 
   <div class="reservation_form">
     <h2>予約</h2>
-    <form action="/reservation" method="post">
+    <form action="/reservation_confirm" method="post">
       @csrf
       <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-      <input class="date_form" type="date" name="date" value="{{ old('date') }}">
-      <input class="time_form" type="time" name="time" value="{{ old('time') }}">
-      <select name="number" class="number_form" value="{{ old('number') }}">
-        <option value="1">1人</option>
-        <option value="2">2人</option>
-        <option value="3">3人</option>
-        <option value="4">4人</option>
-        <option value="5">5人</option>
-        <option value="6">6人</option>
-        <option value="7">7人</option>
-        <option value="8">8人</option>
-        <option value="9">9人</option>
-        <option value="10">10人</option>
+      <input class="date_form" type="date" name="date" min="{{ $today }}" value="{{ old('date', $reservation['date'] ?? '') }}" onchange="submit(this.form)">
+      <div class="form__error">
+        @error('date')
+        ※ {{ $message }}
+        @enderror
+      </div>
+      <input class="time_form" type="time" name="time" value="{{ old('time', $reservation['time'] ?? '') }}" onchange="submit(this.form)">
+      <div class="form__error">
+        @error('time')
+        ※ {{ $message }}
+        @enderror
+      </div>
+      <select name="number" class="number_form" onchange="submit(this.form)">
+        @foreach($number_options as $number_option)
+          <option value="{{ $number_option }}"
+            @if (!empty($reservation['number']) && $reservation['number'] == $number_option )
+              selected
+            @endif
+          >
+          {{ $number_option }}人
+          </option>
+        @endforeach
       </select>
+      <div class="form__error">
+        @error('number')
+        ※ {{ $message }}
+        @enderror
+      </div>
       <div class="confirm">
         <table class="confirm__table">
           <tr class="confirm__table--row">
             <th class="confirm__table--header">Shop</th>
-            <td>{{ $shop['name'] }}</td>
+            <td>{{ $shop['name'] ?? '' }}</td>
           </tr>
           <tr class="confirm__table--row">
             <th class="confirm__table--header">Date</th>
-            <td>{{ $date ?? '' }}</td>
+            <td>{{ $reservation['date'] ?? '' }}</td>
           </tr>
           <tr class="confirm__table--row">
             <th class="confirm__table--header">Time</th>
-            <td>{{ $time ?? '' }}</td>
+            <td>{{ $reservation['time'] ?? '' }}</td>
           </tr>
           <tr class="confirm__table--row">
             <th class="confirm__table--header">Number</th>
-            <td>{{ $number ?? '' }}</td>
+            <td>{{ isset($reservation['number']) ? $reservation['number'] . '人' : '' }}</td>
           </tr>
         </table>
       </div>
+    </form>
+    <form action="/reservation" method="post">
+      @csrf
+      <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+      <input type="hidden" name="date" value="{{ old('date', $reservation['date'] ?? '' ) }}">
+      <input type="hidden" name="time" value="{{ old('time', $reservation['time'] ?? '' ) }}">
+      <input type="hidden" name="number" value="{{ old('number', $reservation['number'] ?? '' ) }}">
       <button class="reservation_btn" type="submit">予約する</button>
     </form>
   </div>
 </div>
+@endsection
+
+@section('script')
+<script type="text/javascript">
+$(function(){
+  $("#submit_select").change(function(){
+    $("#submit_form").submit();
+  });
+});
+</script>
 @endsection

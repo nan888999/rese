@@ -23,4 +23,14 @@ Route::get('/logout', [UserController::class, 'logout']);
 
 Route::get('/shop_details', [ShopController::class, 'viewShopDetails']);
 
-Route::post('/reservation', [ReservationController::class, 'reservation']);
+Route::post('/reservation_confirm', [ShopController::class, 'showReservationConfirm']);
+
+Route::post('/reservation', [ShopController::class, 'reservation']);
+
+Route::get('/reservation/done', function () {
+    return view('done');
+})->name('reservation.done');
+
+Route::post('/favorite', [ShopController::class, 'favorite']);
+
+Route::post('/unfavorite', [ShopController::class, 'unfavorite']);

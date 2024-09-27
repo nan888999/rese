@@ -27,9 +27,19 @@
           </form>
         </div>
         <div class="form-buttons__favorite">
-          <form action="/favorite" method="post">
-            <button class="favorite-btn" type="submit"></button>
-          </form>
+          @if (in_array($shop->id, $favorite_shops))
+            <form action="/unfavorite" method="post">
+              @csrf
+              <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                <button class="favorite-btn--on" type="submit"></button>
+            </form>
+          @else
+            <form action="/favorite" method="post">
+              @csrf
+              <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+              <button class="favorite-btn--off" type="submit"></button>
+            </form>
+          @endif
         </div>
       </div>
     </div>
