@@ -34,3 +34,7 @@ Route::get('/reservation/done', function () {
 Route::post('/favorite', [ShopController::class, 'favorite']);
 
 Route::post('/unfavorite', [ShopController::class, 'unfavorite']);
+
+Route::get('/my_page', [ShopController::class, 'myPage']);
+
+Route::post('/cancel', [ShopController::class, 'cancel']);

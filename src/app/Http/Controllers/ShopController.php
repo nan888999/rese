@@ -21,9 +21,9 @@ class ShopController extends Controller
 
             $shops = Shop::with(['area', 'category'])->select('id', 'name', 'area_id', 'category_id', 'img_url')->get();
 
-            $favorite_shops = Favorite::where('user_id', $user_id)->pluck('shop_id')->toArray();
+            $favorite_shop_ids = Favorite::where('user_id', $user_id)->pluck('shop_id')->toArray();
 
-            return view('index', compact('shops', 'favorite_shops'));
+            return view('index', compact('shops', 'favorite_shop_ids'));
         } else {
             return redirect ('/login');
         }
@@ -79,6 +79,20 @@ class ShopController extends Controller
         return redirect()->route('reservation.done');
     }
 
+    public function cancel (Request $request)
+    {
+        if(Auth::check()) {
+            $user_id = Auth::id();
+            $shop_id = $request->input('shop_id');
+            Reservation::where('user_id', $user_id)
+            ->where('shop_id', $shop_id)
+            ->first()
+            ->delete();
+            return redirect ('/my_page');
+        } else {
+            return redirect ('/login')->with('error_message', '再度ログインしてください');
+        }
+    }
     public function favorite(Request $request)
     {
         $user_id = Auth::id();
@@ -102,5 +116,23 @@ class ShopController extends Controller
         }
         Favorite::where('user_id', $user_id)->find($request->shop_id)->delete();
         return redirect('/');
+    }
+
+    public function myPage(Request $request)
+    {
+        $user_id = Auth::id();
+        if(!$user_id) {
+            return redirect ('/login')->with('error_message', '再度ログインしてください');
+        }
+
+        $reserved_shops = Reservation::with(['shop:id,name'])
+        ->where('user_id', $user_id)
+        ->get(['shop_id', 'date', 'time', 'number']);
+
+        $favorite_shop_ids = Favorite::where('user_id', $user_id)->pluck('shop_id')->toArray();
+
+        $favorite_shops = Shop::whereIn('id', $favorite_shop_ids)->with('area', 'category')->get();
+
+        return view ('my_page', compact('user_id', 'reserved_shops', 'favorite_shop_ids', 'favorite_shops'));
     }
 }

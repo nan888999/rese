@@ -4,6 +4,10 @@
 <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 @endsection
 
+@section('header')
+
+@endsection
+
 @section('main')
 @foreach($shops as $shop)
   <div class="shop-card">
@@ -27,7 +31,7 @@
           </form>
         </div>
         <div class="form-buttons__favorite">
-          @if (in_array($shop->id, $favorite_shops))
+          @if (in_array($shop->id, $favorite_shop_ids))
             <form action="/unfavorite" method="post">
               @csrf
               <input type="hidden" name="shop_id" value="{{ $shop->id }}">

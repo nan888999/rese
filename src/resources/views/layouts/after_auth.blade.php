@@ -14,7 +14,7 @@
       <ul class="navigation__list">
         <li class="navigation__list-item"><a href="/" class="navigation__link">Home</a></li>
         <li class="navigation__list-item"><a href="/logout" class="navigation__link">Logout</a></li>
-        <li class="navigation__list-item"><a href="#" class="navigation__link">Mypage</a></li>
+        <li class="navigation__list-item"><a href="/my_page" class="navigation__link">Mypage</a></li>
       </ul>
     </nav>
     <div class="header__items">
@@ -25,6 +25,7 @@
       </button>
       <div class="header__title">Rese</div>
     </div>
+    @yield('header')
   </header>
   @if(session('message'))
     <div class="alert-success">

@@ -1,0 +1,14 @@
+/* my_page.blade.php */
+.reservation-card {
+  width: 480px;
+  margin: 30px;
+  padding: 15px;
+  background-color: rgb(58, 103, 250);
+  color: white;
+}
+.cancel-btn {
+  border-radius: 50%;
+  border: solid 3px white;
+  color: inherit;
+  background-color: rgb(58, 103, 250);
+}
