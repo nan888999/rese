@@ -21,9 +21,13 @@ class ShopController extends Controller
 
             $shops = Shop::with(['area', 'category'])->select('id', 'name', 'area_id', 'category_id', 'img_url')->get();
 
+            $areas = Area::select('id', 'name')->get();
+
+            $categories = Category::select('id', 'name')->get();
+
             $favorite_shop_ids = Favorite::where('user_id', $user_id)->pluck('shop_id')->toArray();
 
-            return view('index', compact('shops', 'favorite_shop_ids'));
+            return view('index', compact('shops', 'areas', 'categories', 'favorite_shop_ids'));
         } else {
             return redirect ('/login');
         }
@@ -134,5 +138,36 @@ class ShopController extends Controller
         $favorite_shops = Shop::whereIn('id', $favorite_shop_ids)->with('area', 'category')->get();
 
         return view ('my_page', compact('user_id', 'reserved_shops', 'favorite_shop_ids', 'favorite_shops'));
+    }
+
+    public function search (Request $request)
+    {
+        $user_id = Auth::id();
+        $query = Shop::query();
+
+        /* area検索 */
+        $areas = Area::select('id', 'name')->get();
+        $area_id = $request->input('area');
+        if(!empty($area_id)) {
+            $query->where('area_id', '=', $area_id);
+        }
+
+        /* genre検索 */
+        $categories = Category::select('id', 'name')->get();
+        $category_id = $request->input('category');
+        if(!empty($category_id)) {
+            $query->where('category_id', '=', $category_id);
+        }
+
+        /* keyword検索 */
+        $keyword = $request->input('keyword');
+        if(!empty($keyword)) {
+            $query->where('name', 'LIKE', "%{$keyword}%");
+        }
+
+        $shops = $query->get();
+        $favorite_shop_ids = Favorite::where('user_id', $user_id)->pluck('shop_id')->toArray();
+
+        return view ('index', compact('shops', 'areas', 'area_id', 'keyword', 'categories', 'category_id', 'favorite_shop_ids'));
     }
 }

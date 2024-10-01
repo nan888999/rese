@@ -35,6 +35,8 @@ Route::post('/favorite', [ShopController::class, 'favorite']);
 
 Route::post('/unfavorite', [ShopController::class, 'unfavorite']);
 
+Route::get('/search', [ShopController::class, 'search']);
+
 Route::get('/my_page', [ShopController::class, 'myPage']);
 
 Route::post('/cancel', [ShopController::class, 'cancel']);

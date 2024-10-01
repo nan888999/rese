@@ -1,6 +1,5 @@
 body {
   background-color: gainsboro;
-  margin-top: 50px;
 }
 
 a {
@@ -23,12 +22,18 @@ input, select {
   padding: 5px;
 }
 
-/* ハンバーガーメニュー */
 .header__items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 8vw;
+}
+
+/* ハンバーガーメニュー */
+.header__menu {
   display: flex;
   align-items: center;
   position: relative;
-  margin-left: 8vw;
 }
 
 button.hamburger-menu {

@@ -4,8 +4,38 @@
 <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 @endsection
 
-@section('header')
-
+@section('header__contents')
+<div class="search-form">
+  <form action="/search" method="get">
+    @csrf
+    <select name="area" class="search-form__select" onchange="submit(this.form)">
+      <option value="" disabled class="option__title" selected>All area</option>
+      @foreach($areas as $area)
+        <option value="{{ $area->id }}"
+          @if(!empty($area_id) && $area_id == $area->id )
+            selected
+          @endif
+        >
+        {{ $area->name }}
+        </option>
+      @endforeach
+    </select>
+    <select name="category" class="search-form__select" onchange="submit(this.form)">
+      <option value="" disabled class="option__title" selected>All genre</option>
+      @foreach($categories as $category)
+        <option value="{{ $category->id }}"
+          @if(!empty($category_id) && $category_id == $category->id )
+            selected
+          @endif
+        >
+        {{ $category->name }}
+        </option>
+      @endforeach
+    </select>
+    <button type="submit" class="search-btn"><span></span></button>
+    <input type="text" class="search-form__keyword" name="keyword" value="{{ $keyword ?? '' }}">
+  </form>
+</div>
 @endsection
 
 @section('main')
