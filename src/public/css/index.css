@@ -7,11 +7,12 @@
 }
 
 .search-form {
-  margin: 20;
+  margin: 20px 0;
 }
 
-.option__title {
-  display: none;
+.search-form__select {
+  padding: 10px;
+
 }
 
 .shop-card {
@@ -48,41 +49,6 @@
   justify-content: space-between;
 }
 
-/* 検索ボタン */
-.search-btn {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  font-size: 50px;
-  position: relative;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
-  cursor: pointer;
-}
-
-.search-btn span {
-  position: absolute;
-  display: block;
-  top: 50%;
-  left: 50%;
-  width: 56%;
-  height: 56%;
-  border-radius: 50%;
-  margin: -.28em 0 0 -.28em;
-  border: .12em solid #673AB7;
-}
-
-.search-btn span::after {
-  position: absolute;
-  display: block;
-  content: "";
-  top: 50%;
-  left: 50%;
-  width: 72%;
-  height: 36%;
-  background: #673AB7;
-  margin: .2em 0 0 .14em;
-  transform: rotate(45deg);
-}
 /* お気に入りボタン */
 .favorite-btn--on,
 .favorite-btn--off {

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function showRegister()
+    public function viewRegister()
     {
         return view('auth.register');
     }
@@ -27,7 +27,7 @@ class UserController extends Controller
         return view('auth.thanks');
     }
 
-    public function showLogin()
+    public function viewLogin()
     {
         return view ('auth.login');
     }

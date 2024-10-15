@@ -19,12 +19,17 @@
       </ul>
     </nav>
     <div class="header__items">
-      <button class="hamburger-menu" id="js-hamburger-menu">
-      <span class="hamburger-menu__bar"></span>
-      <span class="hamburger-menu__bar"></span>
-      <span class="hamburger-menu__bar"></span>
-      </button>
-      <div class="header__title">Rese</div>
+      <div class="header__menu">
+        <button class="hamburger-menu" id="js-hamburger-menu">
+          <span class="hamburger-menu__bar"></span>
+          <span class="hamburger-menu__bar"></span>
+          <span class="hamburger-menu__bar"></span>
+        </button>
+        <div class="header__title">Rese</div>
+      </div>
+      <div class="header__contents">
+        @yield('header__contents')
+      </div>
     </div>
   </header>
   @if(session('message'))
@@ -40,6 +45,7 @@
   <main class="main">
     @yield('main')
   </main>
+  <script src="https://kit.fontawesome.com/799281266d.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(function () {
@@ -49,5 +55,6 @@
       });
     });
   </script>
+  @yield('script')
 </body>
 </html>

@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="{{ asset('css/common.css') }}">
   @yield('css')
 </head>
-
 <body>
+
   <header class="header">
     <nav class="navigation">
       <ul class="navigation__list">
@@ -21,12 +21,12 @@
     <div class="header__items">
       <div class="header__menu">
         <button class="hamburger-menu" id="js-hamburger-menu">
-        <span class="hamburger-menu__bar"></span>
-        <span class="hamburger-menu__bar"></span>
-        <span class="hamburger-menu__bar"></span>
+          <span class="hamburger-menu__bar"></span>
+          <span class="hamburger-menu__bar"></span>
+          <span class="hamburger-menu__bar"></span>
         </button>
         <div class="header__title">Rese</div>
-        </div>
+      </div>
       <div class="header__contents">
         @yield('header__contents')
       </div>
@@ -45,7 +45,7 @@
   <main class="main">
     @yield('main')
   </main>
-
+  <script src="https://kit.fontawesome.com/799281266d.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(function () {

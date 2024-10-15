@@ -33,7 +33,7 @@ class ShopController extends Controller
         }
     }
 
-    public function viewShopDetails(Request $request)
+    public function showShopDetails(Request $request)
     {
         $shop_id = $request->input('shop_id');
         $shop = Shop::where('id', $shop_id)->first();
@@ -46,7 +46,9 @@ class ShopController extends Controller
             '9', '10',
         ];
 
-        return view('reservation', compact('shop', 'today', 'number_options'));
+        $reservation = $request->only(['date', 'time', 'number']);
+
+        return view('reservation', compact('shop','today', 'number_options', 'reservation'));
     }
 
     public function showReservationConfirm(Request $request)
@@ -64,7 +66,15 @@ class ShopController extends Controller
             '9', '10',
         ];
 
-        return view('reservation', compact('shop','today', 'number_options', 'reservation'));
+        return redirect()->route('shop.details', [
+            'shop_id' => $shop->id,
+            'today' => $today,
+            'date' => $reservation['date'] ?? null,
+            'time' => $reservation['time'] ?? null,
+            'number' => $reservation['number'] ?? null,
+            'number_options' => $number_options,
+        ]);
+
     }
 
     public function reservation(ReservationRequest $request)
@@ -78,9 +88,12 @@ class ShopController extends Controller
 
         $today = Carbon::today()->format('Y-m-d');
 
-        Reservation::create(array_merge($reservation_data, ['user_id' => $user_id]));
-
-        return redirect()->route('reservation.done');
+        if(!empty($reservation_data['shop_id']) && !empty($reservation_data['date']) && !empty($reservation_data['time']) && !empty($reservation_data['number'])) {
+            Reservation::create(array_merge($reservation_data, ['user_id' => $user_id]));
+            return view ('done');
+        } else {
+            return route('shop.details');
+        }
     }
 
     public function cancel (Request $request)
@@ -97,6 +110,7 @@ class ShopController extends Controller
             return redirect ('/login')->with('error_message', '再度ログインしてください');
         }
     }
+
     public function favorite(Request $request)
     {
         $user_id = Auth::id();
