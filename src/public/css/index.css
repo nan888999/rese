@@ -12,14 +12,13 @@
 
 .search-form__select {
   padding: 10px;
-
 }
 
 .shop-card {
   margin-top: 10px;
   min-width: 260px;
   width: 20vw;
-  box-shadow: 0 5px 5px 0 #6c6b6b;
+  box-shadow: 2px 2px 3px #6c6b6b;
   border-radius: 5px;
   overflow: hidden;
   box-sizing: border-box;
@@ -47,69 +46,4 @@
 .form-buttons {
   display: flex;
   justify-content: space-between;
-}
-
-/* お気に入りボタン */
-.favorite-btn--on,
-.favorite-btn--off {
-  width: 28px;
-  height: 28px;
-  position: relative;
-  background-color: transparent;
-  border: none;
-}
-
-.favorite-btn--on::before,
-.favorite-btn--on::after,
-.favorite-btn--off::before,
-.favorite-btn--off::after {
-  content: "";
-  width: 50%;
-  height: 80%;
-  top: 10%;
-  border-radius: 7px 7px 0 0;
-  display: block;
-  position: absolute;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.favorite-btn--on::before,
-.favorite-btn--on::after {
-  background-color: red;
-}
-
-.favorite-btn--off::before,
-.favorite-btn--off::after {
-  background-color: gainsboro;
-}
-
-.favorite-btn--on::before,
-.favorite-btn--off::before {
-  transform: rotate(-45deg);
-  left: 14%;
-}
-
-.favorite-btn--on::after,
-.favorite-btn--off::after {
-  transform: rotate(45deg);
-  right: 14%;
-}
-
-.favorite-btn--on:focus::before,
-.favorite-btn--on:active::before,
-.favorite-btn--on:hover::before,
-.favorite-btn--on:focus::after,
-.favorite-btn--on:active::after,
-.favorite-btn--on:hover::after {
-  background-color: gainsboro;
-}
-
-.favorite-btn--off:focus::before,
-.favorite-btn--off:active::before,
-.favorite-btn--off:hover::before,
-.favorite-btn--off:focus::after,
-.favorite-btn--off:active::after,
-.favorite-btn--off:hover::after {
-  background-color: red;
 }

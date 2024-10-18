@@ -105,7 +105,11 @@ $(function(){
   $('.time-area').html(time);
 
   var number = $('.number_form').val();
-  $('.number-area').html(number + "人");
+  if (!number) {
+    $('.number-area').html('');
+  } else {
+    $('.number-area').html(number + "人");
+  }
 });
 </script>
 @endsection

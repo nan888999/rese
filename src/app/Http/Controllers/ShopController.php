@@ -109,6 +109,8 @@ class ShopController extends Controller
 
         $reserved_shops = Reservation::with(['shop:id,name'])
         ->where('user_id', $user_id)
+        ->orderBy('date', 'ASC')
+        ->orderBy('time', 'ASC')
         ->get(['id', 'shop_id', 'date', 'time', 'number']);
 
         $today = Carbon::today()->format('Y-m-d');
