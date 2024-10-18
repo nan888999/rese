@@ -1,3 +1,23 @@
+input,
+select {
+  height: 25px;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  margin: 5px 0;
+  padding: 5px;
+}
+
+input.date_form {
+  width: 40%;
+  max-width: 200px;
+}
+
+input.time_form,
+select.number_form {
+  width: 75%;
+  max-width: 360px;
+}
+
 /* my_page.blade.php */
 /* 予約状況 */
 .contents {
@@ -68,14 +88,19 @@ th.reservation-table__header {
   font-weight: 400;
   text-align: left;
   width: 120px;
+  padding: 5px;
 }
 
+.reservation-btn {
+  text-align: right;
+  margin-top: 10px;
+}
 
 /* modal */
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 9999;
   left: 0;
   top: 0;
   height: 100%;
@@ -87,7 +112,8 @@ th.reservation-table__header {
 .modal-content {
   background-color: #f4f4f4;
   margin: 20% auto;
-  width: 50%;
+  width: 80%;
+  max-width: 400px;
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
   animation-name: modalopen;
   animation-duration: 1s;
@@ -127,6 +153,7 @@ th.reservation-table__header {
   color: black;
 }
 
+
 /* お気に入り店舗 */
 .favorite-list {
   margin: 10px 0 20px 8vw;
@@ -137,6 +164,10 @@ th.reservation-table__header {
   font-size: 25px;
   height: 30px;
   font-weight: 800;
+}
+
+.hidden-lg {
+  display: none;
 }
 
 .favorite-list__items {
@@ -216,5 +247,18 @@ th.reservation-table__header {
 
   th.reservation-table__header {
     width: 80px;
+  }
+
+  .favorite-list {
+    margin: 10px;
+    width: 100%;
+  }
+
+  .hidden-sm {
+    display: none;
+  }
+
+  .hidden-lg {
+    display: block;
   }
 }

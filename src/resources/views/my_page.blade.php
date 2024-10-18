@@ -7,8 +7,9 @@
 @section('main')
 <div class="contents">
   <div class="reservation-list">
+    <div class="user-name hidden-lg">{{ $user_name ?? '' }}さん</div>
     <div class="list-title"><h2>予約状況</h2></div>
-    @foreach ($reserved_shops as $reserved_shop)
+    @foreach ($reserved_shops as $key=>$reserved_shop)
       <div class="reservation-card">
         <div class="reservation-card__header">
           <div class="reservation-card__header--inner">
@@ -19,7 +20,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h1>予約変更</h1>
-                  <span class="modalClose">X</span>
+                  <span class="modalClose">×</span>
                 </div>
                 <div class="modal-body">
                   <form action="/update_reservation" method="post">
@@ -49,12 +50,14 @@
                         </option>
                       @endforeach
                     </select>
-                    <button type="submit">予約を変更する</button>
+                    <div class="reservation-btn">
+                      <button class="common-btn" type="submit">予約を変更する</button>
+                    </div>
                   </form>
                 </div>
               </div>
             </div>
-            <div class="reservation-card__header--title">予約</div>
+            <div class="reservation-card__header--title">予約 {{ $key+1 }}</div>
           </div>
 
           <form action="/cancel_reservation" method="post">
@@ -87,7 +90,7 @@
   </div>
 
   <div class="favorite-list">
-    <div class="user-name">{{ $user_name ?? '' }}さん</div>
+    <div class="user-name hidden-sm">{{ $user_name ?? '' }}さん</div>
     <div class="list-title"><h2>お気に入り店舗</h2></div>
     <div class="favorite-list__items">
       @foreach ($favorite_shops as $favorite_shop)

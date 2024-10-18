@@ -178,17 +178,24 @@ class ShopController extends Controller
             'shop_id' => $request->input('shop_id'),
         ];
         Favorite::create($form);
-        return redirect ('/');
+        return redirect()->back();
     }
 
     public function unfavorite (Request $request)
     {
         $user_id = Auth::id();
         if(!$user_id) {
-            return redirect ('/login')->with('error_message', '再度ログインしてください');
+            return redirect ('/login')->with('error_message', 'もう一度ログインし直してください');
         }
-        Favorite::where('user_id', $user_id)->find($request->shop_id)->delete();
-        return redirect('/');
+
+        $favorite = Favorite::where('user_id', $user_id)->where('shop_id', $request->shop_id)->first();
+
+        if(!$favorite) {
+            return redirect()->back()->with('error_message', 'お気に入りが見つかりませんでした');
+        }
+
+        $favorite->delete();
+        return redirect()->back();
     }
 
     public function search (Request $request)
