@@ -31,4 +31,6 @@ Route::get('/search', [ShopController::class, 'search']);
 
 Route::get('/my_page', [ShopController::class, 'myPage']);
 
-Route::post('/cancel', [ShopController::class, 'cancel']);
+Route::post('/cancel_reservation', [ShopController::class, 'cancelReservation']);
+
+Route::post('/update_reservation', [ShopController::class, 'updateReservation']);

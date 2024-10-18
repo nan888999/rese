@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Shop;
 use App\Models\Reservation;
 use App\Models\Area;
@@ -82,8 +83,9 @@ class ShopController extends Controller
         $user_id = Auth::id();
 
         if(!$user_id) {
-            return redirect ('/login')->with('error_message', '認証切れです。再ログインしてください。');
+            return redirect ('/login')->with('error_message', 'もう一度ログインし直してください。');
         }
+
         $reservation_data = $request->only(['shop_id', 'date', 'time', 'number',]);
 
         $today = Carbon::today()->format('Y-m-d');
@@ -96,7 +98,35 @@ class ShopController extends Controller
         }
     }
 
-    public function cancel (Request $request)
+    public function myPage(Request $request)
+    {
+        $user_id = Auth::id();
+        if(!$user_id) {
+            return redirect ('/login')->with('error_message', 'もう一度ログインし直してください');
+        }
+
+        $user_name = User::where('id', $user_id)->value('name');
+
+        $reserved_shops = Reservation::with(['shop:id,name'])
+        ->where('user_id', $user_id)
+        ->get(['id', 'shop_id', 'date', 'time', 'number']);
+
+        $today = Carbon::today()->format('Y-m-d');
+
+        $number_options = [
+            '1', '2', '3', '4',
+            '5', '6', '7', '8',
+            '9', '10',
+        ];
+
+        $favorite_shop_ids = Favorite::where('user_id', $user_id)->pluck('shop_id')->toArray();
+
+        $favorite_shops = Shop::whereIn('id', $favorite_shop_ids)->with('area', 'category')->get();
+
+        return view ('my_page', compact('user_id', 'user_name', 'reserved_shops', 'today', 'number_options',  'favorite_shop_ids', 'favorite_shops'));
+    }
+
+    public function cancelReservation (Request $request)
     {
         if(Auth::check()) {
             $user_id = Auth::id();
@@ -107,7 +137,30 @@ class ShopController extends Controller
             ->delete();
             return redirect ('/my_page');
         } else {
-            return redirect ('/login')->with('error_message', '再度ログインしてください');
+            return redirect ('/login')->with('error_message', 'もう一度ログインし直してください');
+        }
+    }
+
+        public function updateReservation(Request $request)
+    {
+        $user_id = Auth::id();
+
+        if(!$user_id) {
+            return redirect ('/login')->with('error_message', 'もう一度ログインし直してください。');
+        }
+
+        $today = Carbon::today()->format('Y-m-d');
+
+        $reservation_data = $request->only(['shop_id', 'date', 'time', 'number']);
+
+        unset($reservation_data['_token']);
+        $reservation = Reservation::find($request->reservation_id);
+
+        if($reservation) {
+            $reservation->update($reservation_data);
+            return redirect ('/my_page');
+        } else {
+            return redirect ('/my_page')->with('error_message', '予約が見つかりません');
         }
     }
 
@@ -115,7 +168,7 @@ class ShopController extends Controller
     {
         $user_id = Auth::id();
         if(!$user_id) {
-            return redirect ('/login')->with('error_message', '再度ログインしてください');
+            return redirect ('/login')->with('error_message', 'もう一度ログインし直してください');
         }
 
         $form = [
@@ -134,24 +187,6 @@ class ShopController extends Controller
         }
         Favorite::where('user_id', $user_id)->find($request->shop_id)->delete();
         return redirect('/');
-    }
-
-    public function myPage(Request $request)
-    {
-        $user_id = Auth::id();
-        if(!$user_id) {
-            return redirect ('/login')->with('error_message', '再度ログインしてください');
-        }
-
-        $reserved_shops = Reservation::with(['shop:id,name'])
-        ->where('user_id', $user_id)
-        ->get(['shop_id', 'date', 'time', 'number']);
-
-        $favorite_shop_ids = Favorite::where('user_id', $user_id)->pluck('shop_id')->toArray();
-
-        $favorite_shops = Shop::whereIn('id', $favorite_shop_ids)->with('area', 'category')->get();
-
-        return view ('my_page', compact('user_id', 'reserved_shops', 'favorite_shop_ids', 'favorite_shops'));
     }
 
     public function search (Request $request)
