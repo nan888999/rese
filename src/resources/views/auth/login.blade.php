@@ -16,6 +16,6 @@
     <i class="fa-solid fa-lock" style="color: #44526a;"></i>
     <input type="password" name="password" placeholder="Password" value="{{ old('password') }}">
   </div>
-  <button type="submit" class="common-btn">ログイン</button>
+  <button type="submit" class="common-btn auth-btn">ログイン</button>
 </form>
 @endsection

@@ -7,7 +7,6 @@
 @section('main')
 <div class="contents">
   <div class="shop_details">
-    <h1 class="title">Rese</h1>
     <div class="shop_name">
       <a class="return_btn" href="/"><</a>
       <h2>{{ $shop->name ?? '' }}</h2>

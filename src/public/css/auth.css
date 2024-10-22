@@ -1,7 +1,7 @@
 .main {
   margin: 30px auto;
-  width: 25vw;
-  min-width: 280px;
+  width: 30vw;
+  min-width: 360px;
   box-shadow: 2px 2px 4px #6c6b6b;
 }
 
@@ -27,15 +27,32 @@ input:focus {
   border-bottom-color: skyblue;
 }
 
-.common-btn {
+.auth-btn {
   display: block;
   margin: 15px 0 0 auto;
 }
 
 .login-form,
-.register-form {
+.verify-form,
+.register-form,
+.verify-message {
   background-color: white;
   padding: 15px;
   border-radius: 0 0 3px 3px;
 }
 
+.thanks-message {
+  background-color: white;
+  padding: 50px 15px;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.link-btn {
+  color: white;
+}
+
+.form__error {
+  color: red;
+  margin-left: 25px;
+}

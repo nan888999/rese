@@ -32,10 +32,10 @@
         </option>
       @endforeach
     </select>
-    <button type="submit" class="search-btn">
+    <button type="submit" class="no-btn-shape">
       <i class="fa-solid fa-magnifying-glass" style="color: #dddddf;"></i>
     </button>
-    <input type="text" class="search-form__keyword" name="keyword" value="{{ $keyword ?? '' }}">
+    <input type="text" class="search-form__keyword" name="keyword" placeholder="Search..." value="{{ $keyword ?? '' }}">
   </form>
 </div>
 @endsection

@@ -14,7 +14,7 @@
     <nav class="navigation">
       <ul class="navigation__list">
         <li class="navigation__list-item"><a href="/" class="navigation__link">Home</a></li>
-        <li class="navigation__list-item"><a href="/register" class="navigation__link">Registration</a></li>
+        <li class="navigation__list-item"><a href="/verify_email" class="navigation__link">Registration</a></li>
         <li class="navigation__list-item"><a href="/login" class="navigation__link">Login</a></li>
       </ul>
     </nav>

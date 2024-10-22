@@ -195,7 +195,7 @@ class ShopController extends Controller
         }
 
         $favorite->delete();
-        return redirect()->back();
+        return redi10rect()->back();
     }
 
     public function search (Request $request)

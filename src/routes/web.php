@@ -13,9 +13,16 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
 
 Route::get('/logout', [UserController::class, 'logout']);
 
-Route::get('/register', [UserController::class, 'viewRegister']);
+Route::get('/register', [UserController::class, 'viewRegister'])->name('viewRegister');
 
 Route::post('/register', [UserController::class, 'register']);
+
+// メール認証ページとメール認証処理
+Route::get('/verify_email', [UserController::class, 'viewVerifyEmail']);
+Route::post('/verify_email', [UserController::class, 'verifyEmail']);
+
+// 認証メール内リンククリック時の処理
+Route::get('/email/verify/{id}/{hash}', [UserController::class, 'emailVerified'])->middleware('signed')->name('verification.verify');
 
 Route::get('/shop_details', [ShopController::class, 'showShopDetails'])->name('shop.details');
 
