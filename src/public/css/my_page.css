@@ -34,6 +34,7 @@ select.number_form {
 .list-title {
   height: 30px;
   margin-bottom: 20px;
+  min-width: 120px;
 }
 
 .reservation-card {

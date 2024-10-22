@@ -2,27 +2,28 @@
 
 namespace App\Console;
 
+use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * Define the application's command schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
-     */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // メール認証がされていないユーザーを削除
+        $schedule->call(function() {
+            $expired_users = User::whereNull('name')
+            ->where('created_at', '<', Carbon::now()->subMinutes(60))
+            ->delete();
+        })->everyMinute();
+
+        // 予約時間を過ぎたら評価入力フォームを表示
+        $schedule->call(funvction() {
+
+        })->everyMinute();
     }
 
-    /**
-     * Register the commands for the application.
-     *
-     * @return void
-     */
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');

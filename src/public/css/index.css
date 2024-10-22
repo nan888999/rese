@@ -26,20 +26,30 @@
 }
 
 .search-form::before {
-  left: 23%;
+  left: 105px;
 }
 
 .search-form::after {
-  left: 51%;
+  left: 210px;
 }
 
 .search-form__select,
 .search-form__keyword {
   padding: 10px;
   border: none;
-  margin: 0 -3px 0 0;
+  margin: 0;
 }
 
+#area-select,
+#category-select {
+  width: 100px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("../img/select-arrow.png");
+  background-repeat: no-repeat;
+  background-size: 20px auto;
+  background-position: right;
+}
 
 .no-btn-shape {
   border: none;

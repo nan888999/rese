@@ -8,13 +8,11 @@ use App\Http\Controllers\ReservationController;
 Route::get('/', [ShopController::class, 'getShopsView']);
 
 Route::get('/login', [UserController::class, 'viewLogin']);
-
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
 Route::get('/logout', [UserController::class, 'logout']);
 
 Route::get('/register', [UserController::class, 'viewRegister'])->name('viewRegister');
-
 Route::post('/register', [UserController::class, 'register']);
 
 // メール認証ページとメール認証処理

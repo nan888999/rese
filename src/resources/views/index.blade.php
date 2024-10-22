@@ -8,7 +8,7 @@
 <div class="search-form">
   <form action="/search" method="get">
     @csrf
-    <select name="area" class="search-form__select" onchange="submit(this.form)">
+    <select name="area" class="search-form__select" id="area-select" onchange="submit(this.form)">
       <option value="" disabled class="option__title" selected>All area</option>
       @foreach($areas as $area)
         <option value="{{ $area->id }}"
@@ -20,7 +20,7 @@
         </option>
       @endforeach
     </select>
-    <select name="category" class="search-form__select" onchange="submit(this.form)">
+    <select name="category" class="search-form__select" id="category-select" onchange="submit(this.form)">
       <option value="" disabled class="option__title" selected>All genre</option>
       @foreach($categories as $category)
         <option value="{{ $category->id }}"

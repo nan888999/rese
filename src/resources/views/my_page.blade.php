@@ -8,7 +8,9 @@
 <div class="contents">
   <div class="reservation-list">
     <div class="user-name hidden-lg">{{ $user_name ?? '' }}さん</div>
-    <div class="list-title"><h2>予約状況</h2></div>
+    <div class="list-title">
+      <h2>予約状況</h2>
+    </div>
     @foreach ($reserved_shops as $key=>$reserved_shop)
       <div class="reservation-card">
         <div class="reservation-card__header">

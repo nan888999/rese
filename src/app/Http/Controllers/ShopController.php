@@ -61,21 +61,28 @@ class ShopController extends Controller
 
         $today = Carbon::today()->format('Y-m-d');
 
+        $now = Carbon::now()->format('H:i:s');
+
         $number_options = [
             '1', '2', '3', '4',
             '5', '6', '7', '8',
             '9', '10',
         ];
 
-        return redirect()->route('shop.details', [
+        $route_parameters = [
             'shop_id' => $shop->id,
             'today' => $today,
             'date' => $reservation['date'] ?? null,
             'time' => $reservation['time'] ?? null,
             'number' => $reservation['number'] ?? null,
             'number_options' => $number_options,
-        ]);
+        ];
 
+        if(!empty($reservation['date']) && !empty($reservation['time']) && $reservation['date'] == $today && $reservation['time'] < $now) {
+            return redirect()->route('shop.details', $route_parameters)->withErrors(['time' => '過去の時刻を選択しないでください']);
+        }
+
+        return redirect()->route('shop.details', $route_parameters);
     }
 
     public function reservation(ReservationRequest $request)
@@ -90,9 +97,15 @@ class ShopController extends Controller
 
         $today = Carbon::today()->format('Y-m-d');
 
+        $now = Carbon::now()->format('H:i:s');
+
         if(!empty($reservation_data['shop_id']) && !empty($reservation_data['date']) && !empty($reservation_data['time']) && !empty($reservation_data['number'])) {
-            Reservation::create(array_merge($reservation_data, ['user_id' => $user_id]));
-            return view ('done');
+            if($reservation_data['date'] == $today && $reservation_data['time'] < $now) {
+                return redirect()->back()->withErrors(['time' => '過去の時刻を選択しないでください']);
+            } else {
+                Reservation::create(array_merge($reservation_data, ['user_id' => $user_id]));
+                return view ('done');
+            }
         } else {
             return route('shop.details');
         }
