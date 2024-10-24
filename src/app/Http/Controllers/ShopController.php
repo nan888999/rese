@@ -10,6 +10,7 @@ use App\Models\Reservation;
 use App\Models\Area;
 use App\Models\Category;
 use App\Models\Favorite;
+use App\Models\Review;
 use App\Http\Requests\ReservationRequest;
 use Carbon\Carbon;
 
@@ -36,20 +37,42 @@ class ShopController extends Controller
 
     public function showShopDetails(Request $request)
     {
-        $shop_id = $request->input('shop_id');
-        $shop = Shop::where('id', $shop_id)->first();
+        if(Auth::check()) {
+            $shop_id = $request->input('shop_id');
+            $shop = Shop::where('id', $shop_id)->first();
 
-        $today = Carbon::today()->format('Y-m-d');
+            $today = Carbon::today()->format('Y-m-d');
 
-        $number_options = [
-            '1', '2', '3', '4',
-            '5', '6', '7', '8',
-            '9', '10',
-        ];
+            $number_options = [
+                '1', '2', '3', '4',
+                '5', '6', '7', '8',
+                '9', '10',
+            ];
 
-        $reservation = $request->only(['date', 'time', 'number']);
+            $reservation = $request->only(['date', 'time', 'number']);
 
-        return view('reservation', compact('shop','today', 'number_options', 'reservation'));
+            // 予約済情報
+            $user_id = Auth::id();
+            $reserved_ids = Reservation::where([
+                ['user_id', '=', $user_id],
+                ['shop_id', '=', $shop_id],
+            ])->pluck('id');
+
+            // 予約済だがレビューのない予約ID
+            $unreviewed_reservation = Review::whereIn('id', $reserved_ids)->whereNotIn('id', function($query) {
+                $query->select('reservation_id')->from('reviews');
+            })->first();
+
+            if($unreviewed_reservation) {
+                $unreviewed_reservation_time = Carbon::createFromFormat('H:i:s', $unreviewed_reservation->time)->format('H:i');
+
+                return view('reservation', compact('shop','today', 'number_options', 'reservation', 'unreviewed_reservations', 'unreviewed_reservation_time'));
+            } else {
+                return view('reservation', compact('shop','today', 'number_options', 'reservation', 'unreviewed_reservation'));
+            }
+        } else {
+            return redirect ('/login');
+        }
     }
 
     public function showReservationConfirm(Request $request)
@@ -111,6 +134,20 @@ class ShopController extends Controller
         }
     }
 
+    public function review(ReviewRequest $request)
+    {
+        $user_id = Auth::id();
+        if(!$user_id) {
+            return redirect ('/login')->with('error_message', 'もう一度ログインし直してください');
+        }
+
+        $review = $request->input('shop_id', 'rating', 'comment');
+
+        Rating::create(array_merge($review, ['user_id' => $user_id]));
+
+        return redirect()->back()->with('message', '評価が完了しました');
+    }
+
     public function myPage(Request $request)
     {
         $user_id = Auth::id();
@@ -156,7 +193,7 @@ class ShopController extends Controller
         }
     }
 
-        public function updateReservation(Request $request)
+    public function updateReservation(Request $request)
     {
         $user_id = Auth::id();
 
@@ -241,4 +278,5 @@ class ShopController extends Controller
 
         return view ('index', compact('shops', 'areas', 'area_id', 'keyword', 'categories', 'category_id', 'favorite_shop_ids'));
     }
+
 }

@@ -147,6 +147,7 @@ $(function(){
     $("#submit_form").submit();
   });
 });
+
 document.addEventListener('DOMContentLoaded', function () {
   // モーダルを開くボタンをすべて取得
   const buttonsOpen = document.querySelectorAll('.modalOpen');

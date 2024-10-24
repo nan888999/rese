@@ -19,9 +19,6 @@ class Kernel extends ConsoleKernel
         })->everyMinute();
 
         // 予約時間を過ぎたら評価入力フォームを表示
-        $schedule->call(funvction() {
-
-        })->everyMinute();
     }
 
     protected function commands()
