@@ -19,11 +19,6 @@ class EmailVerification extends Mailable
         $this->verification_url = $verification_url;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
         return $this

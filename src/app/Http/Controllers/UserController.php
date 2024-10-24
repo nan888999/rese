@@ -32,7 +32,8 @@ class UserController extends Controller
         $user->update([
             'name' => $request->input('name'),
             'password' => Hash::make($request->input('password')),
-            'email_verified' => '1',
+            'role' => 3,
+            'email_verified' => 1,
         ]);
 
         Auth::login($user);
@@ -88,15 +89,15 @@ class UserController extends Controller
             'email_verify_token' => base64_encode($request['email']),
         ]);
         // メール確認リンクの生成
-        $verificationUrl = URL::temporarySignedRoute(
+        $verification_url = URL::temporarySignedRoute(
             'verification.verify',
             now()->addMinutes(60),
             ['id' => $user->id, 'hash' => sha1($user->email)]
         );
         // 認証メールの送信
-        Mail::to($user->email)->send(new EmailVerification($user, $verificationUrl));
+        Mail::to($user->email)->send(new EmailVerification($user, $verification_url));
 
-        return view ('auth.emails.verified', compact('verificationUrl'));
+        return view ('auth.emails.verified', compact('verification_url'));
     }
 
     // 認証メール内リンククリック時の処理

@@ -11,71 +11,66 @@ use App\Models\Area;
 use App\Models\Category;
 use App\Models\Favorite;
 use App\Models\Review;
+use App\Http\Requests\AuthRequest;
 use App\Http\Requests\ReservationRequest;
+use App\Http\Requests\ReviewRequest;
 use Carbon\Carbon;
 
 class ShopController extends Controller
 {
-    public function getShopsView(Request $request)
+    public function getShopsView(AuthRequest $request)
     {
-        if(Auth::check()) {
-            $user_id = Auth::id();
+        $user_id = Auth::id();
 
-            $shops = Shop::with(['area', 'category'])->select('id', 'name', 'area_id', 'category_id', 'img_url')->get();
+        $shops = Shop::with(['area', 'category'])->select('id', 'name', 'area_id', 'category_id', 'img_url')->get();
 
-            $areas = Area::select('id', 'name')->get();
+        $areas = Area::select('id', 'name')->get();
 
-            $categories = Category::select('id', 'name')->get();
+        $categories = Category::select('id', 'name')->get();
 
-            $favorite_shop_ids = Favorite::where('user_id', $user_id)->pluck('shop_id')->toArray();
+        $favorite_shop_ids = Favorite::where('user_id', $user_id)->pluck('shop_id')->toArray();
 
-            return view('index', compact('shops', 'areas', 'categories', 'favorite_shop_ids'));
+        return view('index', compact('shops', 'areas', 'categories', 'favorite_shop_ids'));
+    }
+
+    public function showShopDetails(AuthRequest $request)
+    {
+        $shop_id = $request->input('shop_id');
+        $shop = Shop::where('id', $shop_id)->first();
+
+        $today = Carbon::today()->format('Y-m-d');
+        $now = Carbon::now()->format('H:i');
+
+        $number_options = [
+            '1', '2', '3', '4',
+            '5', '6', '7', '8',
+            '9', '10',
+        ];
+
+        $reservation = $request->only(['date', 'time', 'number']);
+
+        // 予約済情報
+        $user_id = Auth::id();
+        $reserved_ids = Reservation::where([
+            ['user_id', '=', $user_id],
+            ['shop_id', '=', $shop_id],
+        ])->pluck('id');
+
+        // 予約済だがレビューのない予約ID
+        $unreviewed_reservation = Reservation::whereIn('id', $reserved_ids)->whereNotIn('id', function($query) {
+            $query->select('reservation_id')->from('reviews');
+        })->first();
+
+        if($unreviewed_reservation) {
+            $unreviewed_reservation_time = Carbon::createFromFormat('H:i:s', $unreviewed_reservation->time)->format('H:i');
+
+            return view('reservation', compact('shop','today', 'now', 'number_options', 'reservation', 'unreviewed_reservation', 'unreviewed_reservation_time'));
         } else {
-            return redirect ('/login');
+            return view('reservation', compact('shop','today', 'now', 'number_options', 'reservation', 'unreviewed_reservation'));
         }
     }
 
-    public function showShopDetails(Request $request)
-    {
-        if(Auth::check()) {
-            $shop_id = $request->input('shop_id');
-            $shop = Shop::where('id', $shop_id)->first();
-
-            $today = Carbon::today()->format('Y-m-d');
-
-            $number_options = [
-                '1', '2', '3', '4',
-                '5', '6', '7', '8',
-                '9', '10',
-            ];
-
-            $reservation = $request->only(['date', 'time', 'number']);
-
-            // 予約済情報
-            $user_id = Auth::id();
-            $reserved_ids = Reservation::where([
-                ['user_id', '=', $user_id],
-                ['shop_id', '=', $shop_id],
-            ])->pluck('id');
-
-            // 予約済だがレビューのない予約ID
-            $unreviewed_reservation = Review::whereIn('id', $reserved_ids)->whereNotIn('id', function($query) {
-                $query->select('reservation_id')->from('reviews');
-            })->first();
-
-            if($unreviewed_reservation) {
-                $unreviewed_reservation_time = Carbon::createFromFormat('H:i:s', $unreviewed_reservation->time)->format('H:i');
-
-                return view('reservation', compact('shop','today', 'number_options', 'reservation', 'unreviewed_reservations', 'unreviewed_reservation_time'));
-            } else {
-                return view('reservation', compact('shop','today', 'number_options', 'reservation', 'unreviewed_reservation'));
-            }
-        } else {
-            return redirect ('/login');
-        }
-    }
-
-    public function showReservationConfirm(Request $request)
+    public function showReservationConfirm(AuthRequest $request)
     {
         $shop_id = $request->input('shop_id');
         $shop = Shop::where('id', $shop_id)->first();
@@ -84,7 +79,7 @@ class ShopController extends Controller
 
         $today = Carbon::today()->format('Y-m-d');
 
-        $now = Carbon::now()->format('H:i:s');
+        $now = Carbon::now()->format('H:i');
 
         $number_options = [
             '1', '2', '3', '4',
@@ -137,23 +132,17 @@ class ShopController extends Controller
     public function review(ReviewRequest $request)
     {
         $user_id = Auth::id();
-        if(!$user_id) {
-            return redirect ('/login')->with('error_message', 'もう一度ログインし直してください');
-        }
 
-        $review = $request->input('shop_id', 'rating', 'comment');
+        $review = $request->only(['reservation_id', 'rating', 'comment']);
 
-        Rating::create(array_merge($review, ['user_id' => $user_id]));
+        Review::create($review);
 
         return redirect()->back()->with('message', '評価が完了しました');
     }
 
-    public function myPage(Request $request)
+    public function myPage(AuthRequest $request)
     {
         $user_id = Auth::id();
-        if(!$user_id) {
-            return redirect ('/login')->with('error_message', 'もう一度ログインし直してください');
-        }
 
         $user_name = User::where('id', $user_id)->value('name');
 
@@ -178,28 +167,20 @@ class ShopController extends Controller
         return view ('my_page', compact('user_id', 'user_name', 'reserved_shops', 'today', 'number_options',  'favorite_shop_ids', 'favorite_shops'));
     }
 
-    public function cancelReservation (Request $request)
-    {
-        if(Auth::check()) {
-            $user_id = Auth::id();
-            $shop_id = $request->input('shop_id');
-            Reservation::where('user_id', $user_id)
-            ->where('shop_id', $shop_id)
-            ->first()
-            ->delete();
-            return redirect ('/my_page');
-        } else {
-            return redirect ('/login')->with('error_message', 'もう一度ログインし直してください');
-        }
-    }
-
-    public function updateReservation(Request $request)
+    public function cancelReservation (AuthRequest $request)
     {
         $user_id = Auth::id();
+        $shop_id = $request->input('shop_id');
+        Reservation::where('user_id', $user_id)
+        ->where('shop_id', $shop_id)
+        ->first()
+        ->delete();
+        return redirect ('/my_page');
+    }
 
-        if(!$user_id) {
-            return redirect ('/login')->with('error_message', 'もう一度ログインし直してください。');
-        }
+    public function updateReservation(AuthRequest $request)
+    {
+        $user_id = Auth::id();
 
         $today = Carbon::today()->format('Y-m-d');
 
@@ -216,27 +197,23 @@ class ShopController extends Controller
         }
     }
 
-    public function favorite(Request $request)
+    public function favorite(AuthRequest $request)
     {
         $user_id = Auth::id();
-        if(!$user_id) {
-            return redirect ('/login')->with('error_message', 'もう一度ログインし直してください');
-        }
 
         $form = [
             'user_id' => $user_id,
             'shop_id' => $request->input('shop_id'),
         ];
+
         Favorite::create($form);
+
         return redirect()->back();
     }
 
-    public function unfavorite (Request $request)
+    public function unfavorite (AuthRequest $request)
     {
         $user_id = Auth::id();
-        if(!$user_id) {
-            return redirect ('/login')->with('error_message', 'もう一度ログインし直してください');
-        }
 
         $favorite = Favorite::where('user_id', $user_id)->where('shop_id', $request->shop_id)->first();
 
@@ -245,10 +222,10 @@ class ShopController extends Controller
         }
 
         $favorite->delete();
-        return redi10rect()->back();
+        return redirect()->back();
     }
 
-    public function search (Request $request)
+    public function search (AuthRequest $request)
     {
         $user_id = Auth::id();
         $query = Shop::query();
@@ -278,5 +255,4 @@ class ShopController extends Controller
 
         return view ('index', compact('shops', 'areas', 'area_id', 'keyword', 'categories', 'category_id', 'favorite_shop_ids'));
     }
-
 }

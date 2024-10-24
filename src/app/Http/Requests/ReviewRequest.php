@@ -8,13 +8,18 @@ class ReviewRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+        return Auth::check();
+    }
+
+    protected function failedAuthorization()
+    {
+        throw ValidationException::withMessages([])->redirectTo('/login')->with('error_message', 'ログインが必要です');
     }
 
     public function rules()
     {
         return [
-                'rating' => 'required | integer | min:1 | max:5',
+                'rating' => 'required | integer | between:1,5',
                 'comment' => 'string | max:100',
             ];
     }
@@ -24,8 +29,8 @@ class ReviewRequest extends FormRequest
         return [
             'rating.required' => '評価は必須項目です',
             'rating.integer' => '評価は整数を指定してください',
-            'rating.min' => '評価の最小値は1です',
-            'rating.max' => '評価の最大値は5です',
+            'rating.min' => '評価は1〜
+            5の5段階です',
             'comment.string' => '文字列で入力してください',
             'comment.max' => '100字以内で入力してください',
         ];
