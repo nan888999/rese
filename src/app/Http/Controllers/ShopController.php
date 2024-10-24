@@ -107,10 +107,6 @@ class ShopController extends Controller
     {
         $user_id = Auth::id();
 
-        if(!$user_id) {
-            return redirect ('/login')->with('error_message', 'もう一度ログインし直してください。');
-        }
-
         $reservation_data = $request->only(['shop_id', 'date', 'time', 'number',]);
 
         $today = Carbon::today()->format('Y-m-d');
@@ -118,12 +114,8 @@ class ShopController extends Controller
         $now = Carbon::now()->format('H:i:s');
 
         if(!empty($reservation_data['shop_id']) && !empty($reservation_data['date']) && !empty($reservation_data['time']) && !empty($reservation_data['number'])) {
-            if($reservation_data['date'] == $today && $reservation_data['time'] < $now) {
-                return redirect()->back()->withErrors(['time' => '過去の時刻を選択しないでください']);
-            } else {
-                Reservation::create(array_merge($reservation_data, ['user_id' => $user_id]));
-                return view ('done');
-            }
+            Reservation::create(array_merge($reservation_data, ['user_id' => $user_id]));
+            return view ('done');
         } else {
             return route('shop.details');
         }

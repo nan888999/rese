@@ -112,13 +112,13 @@
       <form action="/reservation_confirm" method="post">
         @csrf
         <input type="hidden" name="shop_id" value="{{ $shop->id ?? '' }}">
-        <input class="date_form" type="date" name="date" min="{{ $today }}" value="{{ old('date', $reservation->date ?? '') }}" onchange="submit(this.form)">
+        <input class="date_form" type="date" name="date" min="{{ $today }}" value="{{ old('date', $reservation['date'] ?? '') }}" onchange="submit(this.form)">
         <div class="form__error">
           @error('date')
           ※ {{ $message }}
           @enderror
         </div>
-        <input class="time_form" type="time" name="time" value="{{ old('time', $reservation->time ?? '') }}" onchange="submit(this.form)">
+        <input class="time_form" type="time" name="time" value="{{ old('time', $reservation['time'] ?? '') }}" onchange="submit(this.form)">
         <div class="form__error">
           @error('time')
           ※ {{ $message }}
