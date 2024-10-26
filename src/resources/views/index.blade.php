@@ -33,7 +33,7 @@
       @endforeach
     </select>
     <button type="submit" class="no-btn-shape">
-      <i class="fa-solid fa-magnifying-glass" style="color: #dddddf;"></i>
+      <i class="fa-solid fa-magnifying-glass light-gray-icon"></i>
     </button>
     <input type="text" class="search-form__keyword" name="keyword" placeholder="Search..." value="{{ $keyword ?? '' }}">
   </form>
@@ -41,44 +41,49 @@
 @endsection
 
 @section('main')
-@foreach($shops as $shop)
-  <div class="shop-card">
-    <div class="shop__img">
-      <img src="{{ $shop->img_url ?? '画像がありません' }}" alt="{{ $shop->name ?? '' }}">
-    </div>
-    <div class="shop__contents">
-      <div class="shop__name">
-        {{ $shop['name'] ?? '' }}
+<div class="contents">
+  @foreach($shops as $shop)
+    <div class="shop-card">
+      <div class="shop__img">
+        <img src="{{ $shop->img_url ?? '' }}" alt="
+        @if($shop->img_url) {{ $shop->name ?? '' }}
+        @else No Image @endif
+        ">
       </div>
-      <div class="shop__tags">
-        #{{ $shop->area->name ?? '' }}
-        #{{ $shop->category->name ?? ''}}
-      </div>
-      <div class="form-buttons">
-        <div class="form-buttons__detail">
-          <form action="/shop_details" method="get">
-            @csrf
-            <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-            <button class="common-btn" type="submit">詳しくみる</button>
-          </form>
+      <div class="shop__contents">
+        <div class="shop__name">
+          {{ $shop['name'] ?? '' }}
         </div>
-        <div class="form-buttons__favorite">
-          @if (in_array($shop->id, $favorite_shop_ids))
-            <form action="/unfavorite" method="post">
+        <div class="shop__tags">
+          #{{ $shop->area->name ?? '' }}
+          #{{ $shop->category->name ?? ''}}
+        </div>
+        <div class="form-buttons">
+          <div class="form-buttons__detail">
+            <form action="/shop_details" method="get">
               @csrf
               <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-                <button class="favorite-btn--on" type="submit"></button>
+              <button class="common-btn" type="submit">詳しくみる</button>
             </form>
-          @else
-            <form action="/favorite" method="post">
-              @csrf
-              <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-              <button class="favorite-btn--off" type="submit"></button>
-            </form>
-          @endif
+          </div>
+          <div class="form-buttons__favorite">
+            @if (in_array($shop->id, $favorite_shop_ids))
+              <form action="/unfavorite" method="post">
+                @csrf
+                <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                  <button class="favorite-btn--on" type="submit"></button>
+              </form>
+            @else
+              <form action="/favorite" method="post">
+                @csrf
+                <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                <button class="favorite-btn--off" type="submit"></button>
+              </form>
+            @endif
+          </div>
         </div>
       </div>
     </div>
-  </div>
-@endforeach
+  @endforeach
+</div>
 @endsection

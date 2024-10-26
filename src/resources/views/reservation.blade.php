@@ -6,24 +6,24 @@
 
 @section('main')
 <div class="contents">
-  <div class="shop_details">
-    <div class="shop_name">
+  <div class="shop-details">
+    <div class="shop__name">
       <a class="return_btn" href="/"><</a>
       <h2>{{ $shop->name ?? '' }}</h2>
     </div>
-    <div class="shop_img">
+    <div class="shop__img">
       <img src="{{ $shop->img_url ?? '' }}" alt="{{ $shop->name ?? '' }}">
     </div>
-    <div class="shop_tags">
+    <div class="shop__tags">
       #{{ $shop->area->name ?? '' }}
       #{{ $shop->category->name ?? '' }}
     </div>
-    <div class="shop_detail">
+    <div class="shop__detail">
       {{ $shop->detail ?? ''}}
     </div>
   </div>
 
-  <div class="reservation_form">
+  <div class="reservation-form">
     @if($unreviewed_reservation && ($unreviewed_reservation->date < $today || ($unreviewed_reservation->date == $today && $unreviewed_reservation_time < $now)))
       <div class="reserved">
         <h2>予約状況</h2>
@@ -45,12 +45,12 @@
             <td>{{ $unreviewed_reservation->number ?? ''}} 人</td>
           </tr>
         </table>
-        <button class="reservation_btn modal--open">このお店を評価する</button>
+        <button class="reservation-btn modal--open">このお店を評価する</button>
           <div class="easy-modal modal">
             <div class="modal__content">
               <div class="modal__header">
                 <h1>{{ $shop->name }}</h1>
-                <span class="modal-close">×</span>
+                <span class="modal--close">×</span>
               </div>
               <div class="modal__body">
                 <div class="reserved__table">
@@ -112,19 +112,19 @@
       <form action="/reservation_confirm" method="post">
         @csrf
         <input type="hidden" name="shop_id" value="{{ $shop->id ?? '' }}">
-        <input class="date_form" type="date" name="date" min="{{ $today }}" value="{{ old('date', $reservation['date'] ?? '') }}" onchange="submit(this.form)">
+        <input class="date-form" type="date" name="date" min="{{ $today }}" value="{{ old('date', $reservation['date'] ?? '') }}" onchange="submit(this.form)">
         <div class="form__error">
           @error('date')
           ※ {{ $message }}
           @enderror
         </div>
-        <input class="time_form" type="time" name="time" value="{{ old('time', $reservation['time'] ?? '') }}" onchange="submit(this.form)">
+        <input class="time-form" type="time" name="time" value="{{ old('time', $reservation['time'] ?? '') }}" onchange="submit(this.form)">
         <div class="form__error">
           @error('time')
           ※ {{ $message }}
           @enderror
         </div>
-        <select name="number" class="number_form" onchange="submit(this.form)">
+        <select name="number" class="number-form" onchange="submit(this.form)">
           <option value="" disabled class="option__title" selected>人数を選択してください</option>
           @foreach($number_options as $number_option)
             <option value="{{ $number_option }}"
@@ -168,7 +168,7 @@
         <input type="hidden" name="date" value="{{ old('date', $reservation['date'] ?? '' ) }}">
         <input type="hidden" name="time" value="{{ old('time', $reservation['time'] ?? '' ) }}">
         <input type="hidden" name="number" value="{{ old('number', $reservation['number'] ?? '' ) }}">
-        <button class="reservation_btn" type="submit">予約する</button>
+        <button class="reservation-btn" type="submit">予約する</button>
       </form>
     @endif
   </div>
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // モーダルを開くボタンをすべて取得
   const buttonsOpen = document.querySelectorAll('.modal--open');
   const modals = document.querySelectorAll('.easy-modal');
-  const buttonsClose = document.querySelectorAll('.modal-close');
+  const buttonsClose = document.querySelectorAll('.modal--close');
 
   // 各ボタンにイベントリスナーを設定
   buttonsOpen.forEach((button, index) => {
@@ -225,6 +225,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
-
 </script>
 @endsection

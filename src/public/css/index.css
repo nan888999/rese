@@ -1,4 +1,4 @@
-.main {
+.contents {
   margin: 20px 0 20px 8vw;
   display: flex;
   flex-wrap: wrap;
@@ -40,6 +40,10 @@
   margin: 0;
 }
 
+.light-gray-icon {
+  color: #dddddf;
+}
+
 #area-select,
 #category-select {
   width: 100px;
@@ -58,6 +62,8 @@
 }
 
 .shop-card {
+  background-color: white;
+  height: 300px;
   margin-top: 10px;
   min-width: 260px;
   width: 20vw;
@@ -67,12 +73,15 @@
   box-sizing: border-box;
 }
 
+.shop__img {
+  height: 170px;
+}
+
 .shop__img img {
   width: 100%;
 }
 
 .shop__contents {
-  background-color: white;
   padding: 15px;
 }
 

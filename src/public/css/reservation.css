@@ -13,7 +13,7 @@ select {
 }
 
 /* shop情報 */
-.shop_details {
+.shop-details {
   width: 40vw;
   margin: 5px 7vw 5px 0;
 }
@@ -24,12 +24,13 @@ select {
   color: rgb(58, 103, 250);
 }
 
-.shop_name {
+.shop__name {
   display: flex;
   align-items: center;
 }
 
-.return_btn {
+/* いらない？？？
+.return-btn {
   margin-right: 10px;
   display: inline-block;
   padding: 1px 8px;
@@ -37,17 +38,18 @@ select {
   border-radius: 3px;
   box-shadow: 0 3px 3px 0 gray;
 }
+*/
 
-.shop_img img {
+.shop__img img {
   width: 100%;
 }
 
-.shop_tags {
+.shop__tags {
   margin: 10px 0;
 }
 
 /* 予約フォーム */
-.reservation_form {
+.reservation-form {
   width: 40vw;
   background-color: rgb(58, 103, 250);
   border-radius: 3px;
@@ -57,12 +59,12 @@ select {
   position: relative;
 }
 
-input.date_form {
+input.date-form {
   width: 20vw;
 }
 
-input.time_form,
-select.number_form {
+input.time-form,
+select.number-form {
   width: 35vw;
 }
 
@@ -80,7 +82,7 @@ select.number_form {
   padding: 5px 15px;
 }
 
-.reservation_btn {
+.reservation-btn {
   width: 40vw;
   background-color: blue;
   border: none;
@@ -92,9 +94,9 @@ select.number_form {
   bottom: 0;
 }
 
-.reservation_btn:focus,
-.reservation_btn:active,
-.reservation_btn:hover {
+.reservation-btn:focus,
+.reservation-btn:active,
+.reservation-btn:hover {
   background-color: rgba(85, 85, 249, 0.802);
 }
 
@@ -206,11 +208,11 @@ span.red {
   justify-content: space-between;
 }
 
-.modal-close {
+.modal--close {
   font-size: 2rem;
 }
 
-.modal-close:hover {
+.modal--close:hover {
   cursor: pointer;
 }
 
@@ -260,6 +262,6 @@ span.red {
   text-align: center;
 }
 
-.done_text {
+.done__text {
   margin: 20px auto;
 }

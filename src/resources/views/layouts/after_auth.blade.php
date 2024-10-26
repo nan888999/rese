@@ -9,7 +9,6 @@
   @yield('css')
 </head>
 <body>
-
   <header class="header">
     <nav class="navigation">
       <ul class="navigation__list">

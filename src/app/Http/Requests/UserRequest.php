@@ -24,7 +24,7 @@ class UserRequest extends FormRequest
         return [
             'name.required' => '名前を入力してください',
             'name.string' => '文字列で入力してください',
-            'name.between' => '2字以上50字以内で入力してください',
+            'name.between' => '2字以上50字以下で入力してください',
             'name.regex' => '特殊記号は使用しないでください',
             'password.required' => 'パスワードを入力してください',
             'password.between' => '8字以上16字以内で入力してください',

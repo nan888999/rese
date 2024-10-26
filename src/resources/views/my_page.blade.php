@@ -15,16 +15,16 @@
       <div class="reservation-card">
         <div class="reservation-card__header">
           <div class="reservation-card__header--inner">
-            <button class="modalOpen no-btn-shape">
+            <button class="modal--open no-btn-shape">
               <i class="fa-solid fa-clock fa-xl"></i>
             </button>
-            <div class="easyModal modal">
-              <div class="modal-content">
-                <div class="modal-header">
+            <div class="easy-modal modal">
+              <div class="modal__content">
+                <div class="modal__header">
                   <h1>予約変更</h1>
-                  <span class="modalClose">×</span>
+                  <span class="modal--close">×</span>
                 </div>
-                <div class="modal-body">
+                <div class="modal__body">
                   <form action="/update_reservation" method="post">
                   @csrf
                     <input type="hidden" name="reservation_id" value="{{ $reserved_shop->id ?? '' }}">
@@ -150,9 +150,9 @@ $(function(){
 
 document.addEventListener('DOMContentLoaded', function () {
   // モーダルを開くボタンをすべて取得
-  const buttonsOpen = document.querySelectorAll('.modalOpen');
-  const modals = document.querySelectorAll('.easyModal');
-  const buttonsClose = document.querySelectorAll('.modalClose');
+  const buttonsOpen = document.querySelectorAll('.modal--open');
+  const modals = document.querySelectorAll('.easy-modal');
+  const buttonsClose = document.querySelectorAll('.modal--close');
 
   // 各ボタンにイベントリスナーを設定
   buttonsOpen.forEach((button, index) => {
@@ -177,6 +177,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
-
 </script>
 @endsection

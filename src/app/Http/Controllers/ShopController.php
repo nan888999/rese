@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\ReservationRequest;
+use App\Http\Requests\ReviewRequest;
 use App\Models\User;
 use App\Models\Shop;
 use App\Models\Reservation;
@@ -11,15 +13,18 @@ use App\Models\Area;
 use App\Models\Category;
 use App\Models\Favorite;
 use App\Models\Review;
-use App\Http\Requests\AuthRequest;
-use App\Http\Requests\ReservationRequest;
-use App\Http\Requests\ReviewRequest;
 use Carbon\Carbon;
 
 class ShopController extends Controller
 {
-    public function getShopsView(AuthRequest $request)
+    public function getShopsView(Request $request)
     {
+        $user_role = Auth::user()->role;
+
+        if($user_role == (1 || 2)) {
+            return redirect()->route('admin.index');
+        }
+
         $user_id = Auth::id();
 
         $shops = Shop::with(['area', 'category'])->select('id', 'name', 'area_id', 'category_id', 'img_url')->get();
@@ -33,7 +38,7 @@ class ShopController extends Controller
         return view('index', compact('shops', 'areas', 'categories', 'favorite_shop_ids'));
     }
 
-    public function showShopDetails(AuthRequest $request)
+    public function showShopDetails(Request $request)
     {
         $shop_id = $request->input('shop_id');
         $shop = Shop::where('id', $shop_id)->first();
@@ -70,7 +75,7 @@ class ShopController extends Controller
         }
     }
 
-    public function showReservationConfirm(AuthRequest $request)
+    public function showReservationConfirm(Request $request)
     {
         $shop_id = $request->input('shop_id');
         $shop = Shop::where('id', $shop_id)->first();
@@ -121,7 +126,7 @@ class ShopController extends Controller
         }
     }
 
-    public function review(ReviewRequest $request)
+    public function review(Request $request)
     {
         $user_id = Auth::id();
 
@@ -132,7 +137,7 @@ class ShopController extends Controller
         return redirect()->back()->with('message', '評価が完了しました');
     }
 
-    public function myPage(AuthRequest $request)
+    public function myPage(Request $request)
     {
         $user_id = Auth::id();
 
@@ -159,7 +164,7 @@ class ShopController extends Controller
         return view ('my_page', compact('user_id', 'user_name', 'reserved_shops', 'today', 'number_options',  'favorite_shop_ids', 'favorite_shops'));
     }
 
-    public function cancelReservation (AuthRequest $request)
+    public function cancelReservation (Request $request)
     {
         $user_id = Auth::id();
         $shop_id = $request->input('shop_id');
@@ -170,7 +175,7 @@ class ShopController extends Controller
         return redirect ('/my_page');
     }
 
-    public function updateReservation(AuthRequest $request)
+    public function updateReservation(Request $request)
     {
         $user_id = Auth::id();
 
@@ -189,7 +194,7 @@ class ShopController extends Controller
         }
     }
 
-    public function favorite(AuthRequest $request)
+    public function favorite(Request $request)
     {
         $user_id = Auth::id();
 
@@ -203,7 +208,7 @@ class ShopController extends Controller
         return redirect()->back();
     }
 
-    public function unfavorite (AuthRequest $request)
+    public function unfavorite (Request $request)
     {
         $user_id = Auth::id();
 
@@ -217,7 +222,7 @@ class ShopController extends Controller
         return redirect()->back();
     }
 
-    public function search (AuthRequest $request)
+    public function search (Request $request)
     {
         $user_id = Auth::id();
         $query = Shop::query();

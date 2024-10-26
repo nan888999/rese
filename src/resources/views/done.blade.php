@@ -10,9 +10,9 @@
 
 @section('main')
 <div class="done">
-  <div class="done_text">
+  <div class="done__text">
     ご予約ありがとうございます
   </div>
-  <a href="/" class="common_btn">戻る</a>
+  <a href="/" class="common-btn">戻る</a>
 </div>
 @endsection

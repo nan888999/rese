@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/login', [UserController::class, 'viewLogin']);
 Route::post('/login', [UserController::class, 'login'])->name('login');
@@ -43,4 +44,15 @@ Route::middleware(['check.session'])->group(function () {
   Route::post('/update_reservation', [ShopController::class, 'updateReservation']);
 
   Route::post('/review', [ShopController::class, 'review']);
+});
+
+// 管理者権限が必要なルート
+Route::middleware(['check.role'])->group(function() {
+  Route::get('/admin/manage', [AdminController::class, 'viewShopManage'])->name('admin.index');
+
+  Route::get('/admin/search', [AdminController::class, 'search']);
+
+  Route::post('/admin/add_shop', [AdminController::class, 'addShop']);
+
+  Route::post('/admin/edit_shop', [AdminController::class, 'editShop']);
 });

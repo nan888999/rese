@@ -16,7 +16,7 @@
       @enderror
     </div>
     <div class="login-form__email">
-      <i class="fa-solid fa-envelope" style="color: #44526a;"></i>
+      <i class="fa-solid fa-envelope gray-icon"></i>
       <input type="text" name="email" placeholder="Email" placeholder="{{ old('email') }}">
     </div>
     <button class=" common-btn auth-btn" type="submit">メール送信</button>

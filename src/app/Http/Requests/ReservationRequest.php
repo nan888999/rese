@@ -13,14 +13,7 @@ class ReservationRequest extends FormRequest
 
     public function authorize()
     {
-        return Auth::check();
-    }
-
-    protected function failedAuthorization()
-    {
-        throw new HttpResponseException(
-            redirect($this->redirect)->with('error_message', 'ログインが必要です')
-        );
+        return true;
     }
 
     public function rules()
@@ -45,7 +38,7 @@ class ReservationRequest extends FormRequest
             $currentDate = Carbon::today()->format('Y-m-d');
             $currentTime = Carbon::now()->format('H:i');
 
-            // もし日付が今日で、時刻が現在の時刻よりも前ならエラー
+            // 日付が今日かつ時刻が現在の時刻よりも前ならエラー
             if ($inputDate == $currentDate && $inputTime < $currentTime) {
                 $validator->errors()->add('time', '過去の時刻を選択しないでください');
             }

@@ -21,7 +21,8 @@ class UserController extends Controller
     }
 
     // ユーザー登録処理
-    public function register(UserRequest $request) {
+    public function register(UserRequest $request)
+    {
         $user_id = $request->input('user_id');
         $user = User::find($user_id);
         // ユーザーが見つからない場合の処理
@@ -59,6 +60,13 @@ class UserController extends Controller
 
         if(Auth::attempt($credentials))
         {
+            $user = Auth::user();
+
+            if($user->role == 3) {
+                $request->session()->regenerate();
+                return redirect()->intended('/admin/manage');
+            }
+
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
@@ -83,9 +91,7 @@ class UserController extends Controller
     public function verifyEmail(MailRequest $request)
     {
         $user = User::create([
-            'name' => $request['name'],
             'email' => $request['email'],
-            'password' => Hash::make($request['password']),
             'email_verify_token' => base64_encode($request['email']),
         ]);
         // メール確認リンクの生成
