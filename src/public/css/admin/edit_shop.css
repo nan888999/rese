@@ -1,0 +1,45 @@
+.edit-shop {
+  margin: 0 auto;
+  width: 80%;
+  max-width: 600px;
+}
+
+#edit-shop-form__name,
+.edit-shop-form__select,
+#edit-shop-form__detail,
+#edit-shop-form__img {
+  border: none;
+  border-radius: 3px;
+  margin: 5px 0;
+  padding: 8px;
+}
+
+#edit-shop-form__name,
+#edit-shop-form__detail,
+#edit-shop-form__img {
+  width: 100%;
+}
+
+.edit-shop-form__select {
+  width: 150px;
+}
+
+#edit-shop-form__detail {
+  height: 100px;
+}
+
+.edit-shop-form__label {
+  display: block;
+  font-weight: 600;
+  color: gray;
+}
+
+.form__error {
+  color: red;
+  height: 20px;
+  margin-left: 3px;
+}
+
+.center {
+  text-align: center;
+}

@@ -46,13 +46,21 @@ Route::middleware(['check.session'])->group(function () {
   Route::post('/review', [ShopController::class, 'review']);
 });
 
-// 管理者権限が必要なルート
-Route::middleware(['check.role'])->group(function() {
-  Route::get('/admin/manage', [AdminController::class, 'viewShopManage'])->name('admin.index');
+// 店舗代表者権限が必要なルート
+Route::middleware(['check.manager'])->group(function() {
+  Route::get('/manager/manage', [AdminController::class, 'viewShopManage'])->name('admin.index');
 
-  Route::get('/admin/search', [AdminController::class, 'search']);
+  Route::get('/manager/search', [AdminController::class, 'search']);
 
-  Route::post('/admin/add_shop', [AdminController::class, 'addShop']);
+  Route::post('/manager/add_shop', [AdminController::class, 'addShop']);
 
-  Route::post('/admin/edit_shop', [AdminController::class, 'editShop']);
+  Route::get('/manager/edit_shop', [AdminController::class, 'viewEditForm']);
+  Route::post('/manager/edit_shop', [AdminController::class, 'editShop']);
+
+  Route::get('/manager/reservation', [AdminController::class, 'showReservation']);
+});
+
+Route::middleware(['check.admin'])->group(function() {
+  Route::get('/admin/panel', [AdminController::class, 'viewAdminPanel']);
+  Route::post('/admin/register', [AdminController::class, 'register']);
 });

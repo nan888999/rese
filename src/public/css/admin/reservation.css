@@ -1,0 +1,18 @@
+.main {
+  width: 90vw;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.reservation-table__row {
+  border-bottom: 1px solid gray;
+}
+
+.reservation-table__header {
+  border-top: 1px solid gray;
+  padding: 10px;
+}
+
+.reservation-table__data {
+  padding: 10px;
+}

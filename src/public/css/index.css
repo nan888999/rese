@@ -1,5 +1,8 @@
-.contents {
+.main {
   margin: 20px 0 20px 8vw;
+}
+
+.contents {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;

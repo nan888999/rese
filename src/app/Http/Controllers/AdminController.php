@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\AdminRegisterRequest;
 use App\Http\Requests\ManageShopRequest;
+use App\Models\User;
 use App\Models\Shop;
 use App\Models\Reservation;
 use App\Models\Area;
@@ -20,7 +22,7 @@ class AdminController extends Controller
         $areas = Area::select('id', 'name')->get();
         $categories = Category::select('id', 'name')->get();
 
-        return view('/admin/shop/manage', compact('shops', 'areas', 'categories'));
+        return view('admin.manager.shop_manage', compact('shops', 'areas', 'categories'));
     }
 
     public function search (Request $request)
@@ -49,7 +51,7 @@ class AdminController extends Controller
 
         $shops = $query->get();
 
-        return view ('/admin/shop/manage', compact('shops', 'areas', 'area_id', 'keyword', 'categories', 'category_id'));
+        return view ('admin.manager.shop_manage', compact('shops', 'areas', 'area_id', 'keyword', 'categories', 'category_id'));
     }
 
     public function addShop(ManageShopRequest $request)
@@ -72,24 +74,37 @@ class AdminController extends Controller
         return redirect()->back()->with('message', '店舗が追加されました');
     }
 
+    public function viewEditForm (request $request)
+    {
+        $shop_id = $request->input('shop_id');
+        $shop = Shop::findOrFail($shop_id);
+        $areas = Area::select('id', 'name')->get();
+        $categories = Category::select('id', 'name')->get();
+
+        return view ('admin.manager.edit_shop', compact('shop', 'areas', 'categories'));
+    }
+
     public function editShop (ManageShopRequest $request)
     {
         $shop = $request->only('name', 'area_id', 'category_id', 'detail', 'img_url');
 
-        // バリデータ取得
-        $validator = $request->getValidator();
+        Shop::findOrFail($request->shop_id)->update($shop);
 
-        // バリデーションに失敗した場合は、エラーをセッションにフラッシュする
-        if ($validator->fails()) {
-            return back()
-                ->withErrors($validator)
-                ->withInput()
-                ->with('open_modal_edit', true);
-        }
+        return redirect('admin.shop_manage')->with('message', '店舗情報が更新されました');
+    }
 
-        Shop::find($request->shop_id)->update($shop);
+    public function showReservation(Request $request)
+    {
+        $shop_id = $request->input('shop_id');
+        $shop_name = Shop::find($shop_id)->name;
+        $reservations = Reservation::where('shop_id', $shop_id)->get();
 
-        return redirect()->back()->with('message', '店舗情報が更新されました');
+        return view ('admin.manager.reservation', compact('shop_name', 'reservations'));
+    }
+
+    public function viewAdminPanel()
+    {
+        return view ('admin.panel');
     }
 
     public function register(AdminRegisterRequest $request) {
@@ -101,6 +116,6 @@ class AdminController extends Controller
             'email_verified' => 9,
         ]);
 
-        return redirect()->with('message', '店舗第代表者を登録しました');
+        return redirect('admin.panel')->with('message', '店舗第代表者を登録しました');
     }
 }

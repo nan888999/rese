@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\facades\DB;
+use App\Models\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -35,5 +36,7 @@ class UsersTableSeeder extends Seeder
             'email_verified' => 9,
         ];
         DB::table('users')->insert($param);
+
+        User::factory()->count(10)->create();
     }
 }
