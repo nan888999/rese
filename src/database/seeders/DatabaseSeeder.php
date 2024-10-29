@@ -12,6 +12,8 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             AreasTableSeeder::class,
             CategoriesTableSeeder::class,
-            ShopsTableSeeder::class,ReservationsTableSeeder::class]);
+            ShopsTableSeeder::class,
+            ReservationsTableSeeder::class,
+        ]);
     }
 }
