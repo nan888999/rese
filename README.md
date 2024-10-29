@@ -49,15 +49,16 @@ Dockerビルド
 Laravel環境構築
 1. docker-compose exec php bash
 2. composer install
-3. .env.exampleファイルから.envを作成し、環境変数を変更
-    MAIL_MAILER=smtp
-    MAIL_HOST=mail
-    MAIL_PORT=1025
-    MAIL_USERNAME=null
-    MAIL_PASSWORD=null
-    MAIL_ENCRYPTION=null
-    MAIL_FROM_ADDRESS=rese@example.com
-    MAIL_FROM_NAME="${APP_NAME}"
+3. .env.exampleファイルから.envを作成し、環境変数を変更<br>
+    mailhog設定は下記を参照
+        MAIL_MAILER=smtp<br>
+        MAIL_HOST=mail<br>
+        MAIL_PORT=1025<br>
+        MAIL_USERNAME=null<br>
+        MAIL_PASSWORD=null<br>
+        MAIL_ENCRYPTION=null<br>
+        MAIL_FROM_ADDRESS=rese@example.com<br>
+        MAIL_FROM_NAME="${APP_NAME}"<br>
 4. php artisan:key generate
 5. php artisan migrate
 
