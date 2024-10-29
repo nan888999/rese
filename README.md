@@ -53,7 +53,7 @@ Laravel環境構築
 1. docker-compose exec php bash
 2. composer install
 3. .env.exampleファイルから.envを作成し、環境変数を変更<br>
-    mailhog設定は下記を参照
+    mailhog設定は下記を参照<br>
         MAIL_MAILER=smtp<br>
         MAIL_HOST=mail<br>
         MAIL_PORT=1025<br>
