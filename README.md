@@ -48,7 +48,7 @@
 ## 環境構築
 Dockerビルド
 1. git clone リンク
-2. docker compose up -d —-build
+2. docker compose up -d --build
 
 Laravel環境構築
 1. docker-compose exec php bash
