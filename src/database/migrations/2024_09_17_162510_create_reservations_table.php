@@ -14,7 +14,7 @@ class CreateReservationsTable extends Migration
             $table->foreignId('shop_id')->constrained('shops')->cascadeOnUpdate()->cascadeOnDelete();
             $table->date('date');
             $table->time('time');
-            $table->string('number', 2);
+            $table->tinyInteger('number');
             $table->timestamps();
         });
     }

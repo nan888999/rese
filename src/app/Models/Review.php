@@ -9,10 +9,8 @@ class Review extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'reservation_id',
-        'rating',
-        'comment',
+    protected $guarded = [
+        'id',
     ];
 
     public function reservation()

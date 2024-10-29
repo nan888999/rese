@@ -12,6 +12,10 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::get('/register', [UserController::class, 'viewRegister'])->name('viewRegister');
 Route::post('/register', [UserController::class, 'register']);
 
+Route::get('/thanks', function () {
+  return view('auth.thanks');
+});
+
 // メール認証ページとメール認証処理
 Route::get('/verify_email', [UserController::class, 'viewVerifyEmail']);
 Route::post('/verify_email', [UserController::class, 'verifyEmail']);
@@ -30,6 +34,10 @@ Route::middleware(['check.session'])->group(function () {
   Route::post('/reservation_confirm', [ShopController::class, 'showReservationConfirm']);
 
   Route::post('/reservation', [ShopController::class, 'reservation']);
+
+  Route::get('/done', function () {
+    return view('done');
+  });
 
   Route::post('/favorite', [ShopController::class, 'favorite']);
 

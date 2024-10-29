@@ -13,7 +13,7 @@ class CreateShopsTable extends Migration
             $table->string('name');
             $table->foreignId('category_id')->constrained('categories')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('area_id')->constrained('areas')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->text('detail', 200)->nullable();;
+            $table->string('detail', 200)->nullable();;
             $table->string('img_url')->nullable();
             $table->timestamps();
         });

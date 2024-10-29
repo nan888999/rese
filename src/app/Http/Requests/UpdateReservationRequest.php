@@ -22,7 +22,7 @@ class UpdateReservationRequest extends FormRequest
         return [
             'date' => 'required | date | after_or_equal:'. $tomorrow,
             'time' => 'required | date_format:H:i',
-            'number' => 'required',
+            'number' => 'required | integer | between:1,10',
         ];
     }
 
@@ -33,8 +33,10 @@ class UpdateReservationRequest extends FormRequest
             'date.date' => '日付形式で入力してください',
             'date.after_or_equal' => '明日以降の日付を選択してください',
             'time.required' => '時刻を選択してください',
-            'time.date_format' => '時刻はHH:MM形式で入力してください',
-            'number.required' => '人数を選択してください'
+            'time.date_format' => '時刻はH:i形式で入力してください',
+            'number.required' => '人数を選択してください',
+            'number.integer' => '数値を入力してください',
+            'number.between' => '1から10の数値を入力してください',
         ];
     }
 

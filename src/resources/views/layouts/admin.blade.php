@@ -14,7 +14,6 @@
       <ul class="navigation__list">
         <li class="navigation__list-item"><a href="/manager/manage" class="navigation__link">Shop Manage</a></li>
         <li class="navigation__list-item"><a href="/logout" class="navigation__link">Logout</a></li>
-        <li class="navigation__list-item"><a href="/my_page" class="navigation__link">Mypage</a></li>
         <li class="navigation__list-item"><a href="/admin/panel" class="navigation__link">Admin Panel</a></li>
       </ul>
     </nav>

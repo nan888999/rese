@@ -12,7 +12,7 @@ class CreateReviewsTable extends Migration
             $table->id();
             $table->foreignId('reservation_id')->constrained('reservations')->cascadeOnUpdate()->cascadeOnDelete();
             $table->tinyInteger('rating');
-            $table->string('comment')->nullable();
+            $table->string('comment', 100)->nullable();
             $table->timestamps();
         });
     }

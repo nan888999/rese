@@ -16,10 +16,10 @@ class CheckManager
 
       } else {
         $user_role = Auth::user()->role;
-        if ($user_role == 3) {
-            return redirect ('/')->with('error_message', '管理者権限のないアカウントです。管理者アカウントで再ログインしてください。');
-          }
-        return $next($request);
+        if ($user_role == 1 || $user_role == 2) {
+          return $next($request);
+        }
+          return redirect ('/')->with('error_message', '管理者権限のないアカウントです。管理者アカウントで再ログインしてください。');
       }
     }
 }
