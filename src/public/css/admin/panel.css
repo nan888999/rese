@@ -1,5 +1,56 @@
 .menu-buttons {
   display: flex;
+  gap: 20px;
+}
+
+/* メール送信フォーム */
+.main {
+  width: 70vw;
+  max-width: 1000px;
+  margin: 30px auto;
+}
+
+.mail-form {
+  background-color: white;
+  border-radius: 3px;
+}
+
+.mail-form__title {
+  font-size: 20px;
+  font-weight: 600;
+  background-color: rgb(58, 103, 250);
+  color :white;
+  padding: 10px;
+  text-align: center;
+  border-radius: 3px 3px 0 0;
+}
+
+.mail-form__label {
+  font-weight: 600;
+  display: block;
+  margin-left: 20px;
+  padding: 10px 0 2px 0;
+}
+
+.mail-form__input,
+.mail-form__textarea {
+  width: 90%;
+  margin-left: 20px;
+  padding: 5px;
+}
+
+.mail-form__textarea {
+  height: 300px;
+}
+
+.center {
+  text-align: center;
   padding: 20px;
 }
 
+.form__error {
+  margin-left: 20px;
+  color: red;
+  height: 20px;
+  font-weight: 600;
+}

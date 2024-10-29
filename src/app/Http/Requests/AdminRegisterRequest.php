@@ -16,7 +16,7 @@ class AdminRegisterRequest extends FormRequest
     return [
       'name' => 'required | string | between:2,50 | regex:/^[^#<>^;_]*$/',
       'email' => 'required | string | email | unique:users',
-      'password' => 'required | between:8,16 | confirmed',
+      'password' => 'required | string | between:8,16 | confirmed',
     ];
   }
 
@@ -32,6 +32,7 @@ class AdminRegisterRequest extends FormRequest
       'email.email' => 'メール形式で入力してください',
       'email.unique' => 'そのメールアドレスは登録済みです',
       'password.required' => 'パスワードを入力してください',
+      'password.string' => '文字列で入力してください',
       'password.between' => '8字以上16字以内で入力してください',
       'password.confirmed' => '確認用パスワードと一致しません',
     ];

@@ -53,7 +53,7 @@
       </div>
       <div class="modal__body">
         <div class="manage-shop">
-          <form class="manage-shop-form" action="/admin/add_shop" method="post">
+          <form class="manage-shop-form" action="/manager/add_shop" method="post">
             @csrf
             <input type="text" class="manage-shop-form__name" name="name" value="{{ old('name') }}" placeholder="店舗名">
             <div class="form__error">

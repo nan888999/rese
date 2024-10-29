@@ -12,25 +12,29 @@
 @endsection
 
 @section('main')
-<div class="title">メール一斉送信フォーム</div>
-<form action="/admin/mail" class="mail-form" method="post">
-  @csrf
-  <label class="mail-form__label" for="subtitle">件名</label>
-  <input id="subtitle"  class="mail-form__input" type="text" name="subtitle" value="{{ old('subtitle') }}">
-  <div class="form__error">
-    @error('subtitle')
-      {{ $message }}
-    @enderror
-  </div>
+<div class="contents">
+  <form action="/admin/mail" class="mail-form" method="post">
+    @csrf
+    <div class="mail-form__title">メール一斉送信フォーム</div>
 
-  <label class="mail-form__label" for="body">本文</label>
-  <textarea id="body"  class="mail-form__textarea" name="body">{{ old('body') }}</textarea>
-  <div class="form__error">
-    @error('body')
-      {{ $message }}
-    @enderror
-  </div>
+    <label class="mail-form__label" for="subject">件名</label>
+    <input id="subject"  class="mail-form__input" type="text" name="subject" value="{{ old('subject') }}">
+    <div class="form__error">
+      @error('subject')
+        {{ $message }}
+      @enderror
+    </div>
 
-  <button type="submit" class="common-btn auth-btn">送信</button>
-</form>
+    <label class="mail-form__label" for="body">本文</label>
+    <textarea id="body"  class="mail-form__textarea" name="body">{{ old('body') }}</textarea>
+    <div class="form__error">
+      @error('body')
+        {{ $message }}
+      @enderror
+    </div>
+    <div class="center">
+      <button type="submit" class="common-btn">送信</button>
+    </div>
+  </form>
+</div>
 @endsection

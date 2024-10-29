@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\AdminRegisterRequest;
 use App\Http\Requests\ManageShopRequest;
+use App\Http\Requests\AdminMailRequest;
 use App\Models\User;
 use App\Models\Shop;
 use App\Models\Reservation;
 use App\Models\Area;
 use App\Models\Category;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AdminMail;
 
 class AdminController extends Controller
 {
@@ -90,7 +93,7 @@ class AdminController extends Controller
 
         Shop::findOrFail($request->shop_id)->update($shop);
 
-        return redirect('admin.shop_manage')->with('message', '店舗情報が更新されました');
+        return redirect('/admin/shop_manage')->with('message', '店舗情報が更新されました');
     }
 
     public function showReservation(Request $request)
@@ -119,6 +122,25 @@ class AdminController extends Controller
             'email_verified' => 9,
         ]);
 
-        return redirect('admin.panel')->with('message', '店舗第代表者を登録しました');
+        return redirect('/admin/panel')->with('message', '店舗第代表者を登録しました');
+    }
+
+    public function viewAdminMailForm()
+    {
+        return view('admin.mail');
+    }
+
+    public function sendAdminMail(AdminMailRequest $request)
+    {
+        $subject = $request->input('subject');
+        $body = $request->input('body');
+
+        $users = User::where('role', 3)->get();
+
+        foreach ($users as $user) {
+            Mail::to($user->email)->send(new AdminMail($user, $subject, $body));
+        }
+
+        return redirect()->back()->with('message', '全てのユーザーにメールを送信しました');
     }
 }
