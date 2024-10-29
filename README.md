@@ -29,6 +29,7 @@
 - 店舗ごとの予約情報取得機能（店舗代表者権限）
 - 店舗代表者作成機能（管理者権限）
 - 利用者への一斉メール送信機能（管理者権限）
+- QRコードを読み取ることで、本日のショップごとの予約状況表示（店舗代表者権限）
 - スケジューラー
   - 認証メールアドレス送信後、60分以内に会員登録されなければusersテーブルよりユーザーを自動削除
   - 毎朝7時に本日の予約があるユーザーにリマインダーメール送信
@@ -47,12 +48,13 @@
 ## 環境構築
 Dockerビルド
 1. git clone リンク
-2. docker-compose up -d —build
+2. docker compose up -d —-build
 
 Laravel環境構築
 1. docker-compose exec php bash
 2. composer install
-3. .env.exampleファイルから.envを作成し、環境変数を変更<br>
+3. composer require simplesoftwareio/simple-qrcode
+4. .env.exampleファイルから.envを作成し、環境変数を変更<br>
     mailhog設定は下記を参照<br>
         MAIL_MAILER=smtp<br>
         MAIL_HOST=mail<br>
@@ -62,9 +64,9 @@ Laravel環境構築
         MAIL_ENCRYPTION=null<br>
         MAIL_FROM_ADDRESS=rese@example.com<br>
         MAIL_FROM_NAME="${APP_NAME}"<br>
-4. php artisan:key generate
-5. php artisan migrate
-6. php artisan schedule:work（スケジューラー起動）
+5. php artisan:key generate
+6. php artisan migrate
+7. php artisan schedule:work（スケジューラー起動）
 
 ## テストユーザー
 - メールアドレス
