@@ -57,7 +57,7 @@ Route::middleware(['check.session'])->group(function () {
 
 // 店舗代表者権限が必要なルート
 Route::middleware(['check.manager'])->group(function() {
-  Route::get('/manager/manage', [AdminController::class, 'viewShopManage'])->name('admin.index');
+  Route::get('/manager/shop_manage', [AdminController::class, 'viewShopManage'])->name('admin.index');
 
   Route::get('/manager/search', [AdminController::class, 'search']);
 
@@ -67,6 +67,8 @@ Route::middleware(['check.manager'])->group(function() {
   Route::post('/manager/edit_shop', [AdminController::class, 'editShop']);
 
   Route::get('/manager/reservation', [AdminController::class, 'showReservation']);
+
+  Route::get('/manager/reservation/today', [AdminController::class, 'showTodayReservation']);
 });
 
 Route::middleware(['check.admin'])->group(function() {

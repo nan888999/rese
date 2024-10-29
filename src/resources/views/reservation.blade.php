@@ -186,6 +186,9 @@
     @endif
   </div>
 </div>
+<div class="QR-code">
+  {!! $qr_code !!}
+</div>
 @endsection
 
 @section('script')

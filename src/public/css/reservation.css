@@ -53,7 +53,7 @@ select {
   border-radius: 3px;
   box-shadow: 0 3px 3px 0 gray;
   color: white;
-  padding: 0 20px;
+  padding: 20px;
   position: relative;
 }
 
@@ -175,6 +175,10 @@ span.red {
 .rating-form__label:hover~.rating-form__label,
 .rating-form__input:checked~.rating-form__label {
   color: orange;
+}
+
+.QR-code {
+  margin: 30px 7vw;
 }
 
 /* modal */

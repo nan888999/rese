@@ -8,7 +8,7 @@
 @section('main')
 <div class="edit-shop">
   <h1>Edit Shop</h1>
-  <form class="edit-shop-form" action="/admin/edit_shop" method="post">
+  <form class="edit-shop-form" action="/manager/edit_shop" method="post">
     @csrf
     <input type="hidden" name="shop_id" value="{{ $shop->id }}">
     <label class="edit-shop-form__label" for="edit-shop-form__name">Shop Name</label>

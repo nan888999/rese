@@ -14,6 +14,7 @@ use App\Models\Area;
 use App\Models\Category;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AdminMail;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -87,13 +88,13 @@ class AdminController extends Controller
         return view ('admin.manager.edit_shop', compact('shop', 'areas', 'categories'));
     }
 
-    public function editShop (ManageShopRequest $request)
+    public function editShop(ManageShopRequest $request)
     {
         $shop = $request->only('name', 'area_id', 'category_id', 'detail', 'img_url');
 
         Shop::findOrFail($request->shop_id)->update($shop);
 
-        return redirect('/admin/shop_manage')->with('message', '店舗情報が更新されました');
+        return redirect('/manager/shop_manage')->with('message', '店舗情報が更新されました');
     }
 
     public function showReservation(Request $request)
@@ -142,5 +143,21 @@ class AdminController extends Controller
         }
 
         return redirect()->back()->with('message', '全てのユーザーにメールを送信しました');
+    }
+
+    public function showTodayReservation(Request $request)
+    {
+        $shop_id = $request->query('shop_id');
+
+        $shop_name = Shop::find($shop_id)->name;
+
+        $today = Carbon::today()->format('Y-m-d');
+
+        $reservations = Reservation::where('shop_id', $shop_id)
+        ->where('date', $today)
+        ->orderBy('time', 'asc')
+        ->get();
+
+        return view ('admin.manager.reservation', compact('shop_name', 'reservations'));
     }
 }
