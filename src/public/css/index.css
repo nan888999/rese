@@ -68,8 +68,7 @@
   background-color: white;
   height: 300px;
   margin-top: 10px;
-  min-width: 260px;
-  width: 20vw;
+  width: 260px;
   box-shadow: 2px 2px 3px #6c6b6b;
   border-radius: 5px;
   overflow: hidden;
@@ -86,6 +85,7 @@
 
 .shop__contents {
   padding: 15px;
+  height: 130px;
 }
 
 .shop__name {

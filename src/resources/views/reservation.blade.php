@@ -12,7 +12,10 @@
       <h2>{{ $shop->name ?? '' }}</h2>
     </div>
     <div class="shop__img">
-      <img src="{{ $shop->img_url ?? '' }}" alt="{{ $shop->name ?? '' }}">
+      <img src="{{ $shop->img_url ?? '' }}" alt="
+      @if($shop->img_url) {{ $shop->name ?? '' }}
+      @else No Image @endif
+      ">
     </div>
     <div class="shop__tags">
       #{{ $shop->area->name ?? '' }}

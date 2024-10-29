@@ -68,7 +68,10 @@
       @foreach ($favorite_shops as $favorite_shop)
         <div class="shop-card">
           <div class="shop__img">
-            <img src="{{ $favorite_shop->img_url ?? '画像がありません' }}" alt="{{ $favorite_shop->name ?? '' }}">
+            <img src="{{ $favorite_shop->img_url ?? '' }}" alt="
+            @if($favorite_shop->img_url) {{ $favorite_shop->name ?? '' }}
+            @else No Image @endif
+            ">
           </div>
           <div class="shop__contents">
             <div class="shop__name">
