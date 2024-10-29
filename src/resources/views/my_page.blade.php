@@ -15,60 +15,30 @@
       <div class="reservation-card">
         <div class="reservation-card__header">
           <div class="reservation-card__header--inner">
-            <button class="modal--open no-btn-shape">
-              <i class="fa-solid fa-clock fa-xl"></i>
-            </button>
-            <div class="easy-modal modal">
-              <div class="modal__content">
-                <div class="modal__header">
-                  <h1>予約変更</h1>
-                  <span class="modal--close">×</span>
-                </div>
-                <div class="modal__body">
-                  <form action="/update_reservation" method="post">
-                  @csrf
-                    <input type="hidden" name="reservation_id" value="{{ $reserved_shop->id ?? '' }}">
-                    <input type="hidden" name="shop_id" value="{{ $reserved_shop->shop_id ?? '' }}">
-                    <input class="date_form" type="date" name="date" min="{{ $today }}" value="{{ old('date', $reservation['date'] ?? '') }}" placeholder="{{ $reservation->date ?? '' }}">
-                    <div class="form__error">
-                      @error('date')
-                      ※ {{ $message }}
-                      @enderror
-                    </div>
-                    <input class="time_form" type="time" name="time" value="{{ old('time', $reservation['time'] ?? '') }}" placeholder="$reservation->time">
-                    <div class="form__error">
-                      @error('time')
-                      ※ {{ $message }}
-                      @enderror
-                    </div>
-                    <select name="number" class="number_form">
-                      @foreach($number_options as $number_option)
-                        <option value="{{ $number_option }}"
-                          @if (!empty($reservation['number']) && $reservation['number'] == $number_option )
-                            selected
-                          @endif
-                        >
-                        {{ $number_option }}人
-                        </option>
-                      @endforeach
-                    </select>
-                    <div class="reservation-btn">
-                      <button class="common-btn" type="submit">予約を変更する</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
+            @if($reserved_shop->date > $today)
+              <form action="/update_reservation" method="get">
+                @csrf
+                <input type="hidden" name="reservation_id" value="{{ $reserved_shop->id }}">
+                <button class="modal--open no-btn-shape">
+                  <i class="fa-solid fa-clock fa-xl"></i>
+                </button>
+              </form>
+            @endif
             <div class="reservation-card__header--title">予約 {{ $key+1 }}</div>
           </div>
 
-          <form action="/cancel_reservation" method="post">
-            @csrf
-            <input type="hidden" name="shop_id" value="{{ $reserved_shop->shop_id }}">
-            <button class="cancel-btn" type="submit">×</button>
-          </form>
+          @if($reserved_shop->date > $today)
+            <form action="/cancel_reservation" method="post">
+              @csrf
+              <input type="hidden" name="shop_id" value="{{ $reserved_shop->shop_id }}">
+              <button class="cancel-btn" type="submit">×</button>
+            </form>
+          @endif
         </div>
 
+        @if($reserved_shop->date <= $today)
+          ※当日の予約変更はできません
+        @endif
         <table class="reservation-table">
           <tr class="reservation-table__row">
             <th class="reservation-table__header">Shop</th>
@@ -145,36 +115,6 @@
 $(function(){
   $("#submit_select").change(function(){
     $("#submit_form").submit();
-  });
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-  // モーダルを開くボタンをすべて取得
-  const buttonsOpen = document.querySelectorAll('.modal--open');
-  const modals = document.querySelectorAll('.easy-modal');
-  const buttonsClose = document.querySelectorAll('.modal--close');
-
-  // 各ボタンにイベントリスナーを設定
-  buttonsOpen.forEach((button, index) => {
-    button.addEventListener('click', function () {
-      modals[index].style.display = 'block';
-    });
-  });
-
-  // 各モーダルの閉じるボタンにイベントリスナーを設定
-  buttonsClose.forEach((button, index) => {
-    button.addEventListener('click', function () {
-      modals[index].style.display = 'none';
-    });
-  });
-
-  // モーダルの外側をクリックしたら閉じる
-  window.addEventListener('click', function (event) {
-    modals.forEach(modal => {
-      if (event.target == modal) {
-        modal.style.display = 'none';
-      }
-    });
   });
 });
 </script>

@@ -97,7 +97,10 @@ class AdminController extends Controller
     {
         $shop_id = $request->input('shop_id');
         $shop_name = Shop::find($shop_id)->name;
-        $reservations = Reservation::where('shop_id', $shop_id)->get();
+        $reservations = Reservation::where('shop_id', $shop_id)
+        ->orderBy('date', 'asc')
+        ->orderBy('time', 'asc')
+        ->get();
 
         return view ('admin.manager.reservation', compact('shop_name', 'reservations'));
     }

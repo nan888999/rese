@@ -29,7 +29,6 @@ select {
   align-items: center;
 }
 
-/* いらない？？？
 .return-btn {
   margin-right: 10px;
   display: inline-block;
@@ -38,7 +37,6 @@ select {
   border-radius: 3px;
   box-shadow: 0 3px 3px 0 gray;
 }
-*/
 
 .shop__img img {
   width: 100%;
@@ -100,22 +98,32 @@ select.number-form {
   background-color: rgba(85, 85, 249, 0.802);
 }
 
+.center {
+  text-align: center;
+  margin: 20px;
+}
+
+.form__error {
+  height: 20px;
+  color: inherit;
+}
+
 /* モーダル内レビューページ */
-.reserved__table {
+.review-form {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.reserved-table {
   width: 80%;
   margin: 20px auto;
 }
 
-.reserved__table--header {
+.reserved-table__header {
   font-weight: 400;
   text-align: left;
   width: 120px;
   padding: 5px 15px;
-}
-
-.review-form {
-  width: 80%;
-  margin: 0 auto;
 }
 
 .comment-form {
@@ -128,11 +136,16 @@ h2.rating__title {
 }
 
 h2.comment__title {
-  margin: 0;
+  margin: 20px 0 0 0;
 }
 
 span.red {
   margin-left: 10px;
+  color: red;
+}
+
+.review-form__error {
+  height: 20px;
   color: red;
 }
 
@@ -222,21 +235,25 @@ span.red {
 }
 
 @media screen and (max-width: 768px) {
+  .main {
+    width: 90vw;
+    margin: 0 auto;
+  }
   .contents {
     display: block;
   }
-  .shop_details {
+  .shop-details {
     width: 80vw;
     margin: 0 auto;
   }
-  .reservation_form {
+  .reservation-form {
     margin: 40px auto;
     padding: 20px 20px 0 20px;
     width: 80vw;
   }
-  input.date_form,
-  input.time_form,
-  select.number_form,
+  input.date-form,
+  input.time-form,
+  select.number-form,
   .confirm__table,
   .reserved__table {
     width: 50vw;
@@ -245,7 +262,7 @@ span.red {
   .reserved__table--header {
     width: 100px;
   }
-  .reservation_btn {
+  .reservation-btn {
     width: 80vw;
     position: relative;
   }
@@ -265,3 +282,9 @@ span.red {
 .done__text {
   margin: 20px auto;
 }
+
+/* update-reservation.blade.php */
+.btn-space {
+  margin-top: 20px;
+}
+

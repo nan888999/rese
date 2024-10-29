@@ -42,7 +42,7 @@
 @endsection
 
 @section('main')
-<!-- Add モーダル　ここから -->
+<!-- Add モーダル ここから -->
 <div class="shop_register">
   <button class="common-btn modal--open">Shop Registration</button>
   <div class="easy-modal modal" id="add-shop-modal">

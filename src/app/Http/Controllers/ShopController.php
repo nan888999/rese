@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\ReservationRequest;
 use App\Http\Requests\ReviewRequest;
+use App\Http\Requests\UpdateReservationRequest;
 use App\Models\User;
 use App\Models\Shop;
 use App\Models\Reservation;
@@ -20,10 +21,6 @@ class ShopController extends Controller
     public function getShopsView(Request $request)
     {
         $user_role = Auth::user()->role;
-
-        if($user_role == (1 || 2)) {
-            return redirect()->route('admin.index');
-        }
 
         $user_id = Auth::id();
 
@@ -64,7 +61,10 @@ class ShopController extends Controller
         // 予約済だがレビューのない予約ID
         $unreviewed_reservation = Reservation::whereIn('id', $reserved_ids)->whereNotIn('id', function($query) {
             $query->select('reservation_id')->from('reviews');
-        })->first();
+        })
+        ->orderBy('date', 'asc')
+        ->orderBy('time', 'asc')
+        ->first();
 
         if($unreviewed_reservation) {
             $unreviewed_reservation_time = Carbon::createFromFormat('H:i:s', $unreviewed_reservation->time)->format('H:i');
@@ -83,7 +83,6 @@ class ShopController extends Controller
         $reservation = $request->only(['date', 'time', 'number']);
 
         $today = Carbon::today()->format('Y-m-d');
-
         $now = Carbon::now()->format('H:i');
 
         $number_options = [
@@ -115,7 +114,6 @@ class ShopController extends Controller
         $reservation_data = $request->only(['shop_id', 'date', 'time', 'number',]);
 
         $today = Carbon::today()->format('Y-m-d');
-
         $now = Carbon::now()->format('H:i:s');
 
         if(!empty($reservation_data['shop_id']) && !empty($reservation_data['date']) && !empty($reservation_data['time']) && !empty($reservation_data['number'])) {
@@ -126,11 +124,27 @@ class ShopController extends Controller
         }
     }
 
-    public function review(Request $request)
+    public function review(ReviewRequest $request)
     {
         $user_id = Auth::id();
 
         $review = $request->only(['reservation_id', 'rating', 'comment']);
+
+        // バリデータ取得
+        $validator = $request->getValidator();
+
+        // バリデーションに失敗した場合は、エラーをセッションにフラッシュする
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('open_modal', true);
+        }
+
+        // 予約IDが実際に存在するか確認
+        if (!Reservation::where('id', $review['reservation_id'])->exists()) {
+            return back()->withErrors(['reservation_id' => '無効な予約IDです']);
+        }
 
         Review::create($review);
 
@@ -143,13 +157,21 @@ class ShopController extends Controller
 
         $user_name = User::where('id', $user_id)->value('name');
 
+        $today = Carbon::today()->format('Y-m-d');
+        $now = Carbon::now()->format('H:i:s');
+        $tomorrow = Carbon::tomorrow()->format('Y-m-d');
+
         $reserved_shops = Reservation::with(['shop:id,name'])
         ->where('user_id', $user_id)
-        ->orderBy('date', 'ASC')
+        ->where(function ($query) use ($today, $now) {
+            $query->where('date', '>=', $today)
+            ->orWhere(function ($query) use ($today, $now) {
+                $query->where('date', '=', $today)
+                ->where('time', '>', $now);
+            });
+        })->orderBy('date', 'ASC')
         ->orderBy('time', 'ASC')
         ->get(['id', 'shop_id', 'date', 'time', 'number']);
-
-        $today = Carbon::today()->format('Y-m-d');
 
         $number_options = [
             '1', '2', '3', '4',
@@ -161,25 +183,54 @@ class ShopController extends Controller
 
         $favorite_shops = Shop::whereIn('id', $favorite_shop_ids)->with('area', 'category')->get();
 
-        return view ('my_page', compact('user_id', 'user_name', 'reserved_shops', 'today', 'number_options',  'favorite_shop_ids', 'favorite_shops'));
+        return view ('my_page', compact('user_id', 'user_name', 'reserved_shops', 'today', 'tomorrow', 'number_options',  'favorite_shop_ids', 'favorite_shops'));
     }
 
     public function cancelReservation (Request $request)
     {
         $user_id = Auth::id();
         $shop_id = $request->input('shop_id');
-        Reservation::where('user_id', $user_id)
+
+        $reservation = Reservation::where('user_id', $user_id)
         ->where('shop_id', $shop_id)
-        ->first()
-        ->delete();
-        return redirect ('/my_page');
+        ->first();
+
+        if ($reservation) {
+            $reservation->delete();
+            return redirect('/my_page')->with('success_message', '予約をキャンセルしました');
+        } else {
+            return redirect('/my_page')->with('error_message', '該当する予約が見つかりません');
+        }
     }
 
-    public function updateReservation(Request $request)
+    public function showUpdateReservationForm(Request $request)
+    {
+        $reservation_id = $request->input('reservation_id');
+
+        $reservation = Reservation::find($reservation_id);
+
+        $reservation_time = optional($reservation)->time;
+            if ($reservation_time) {
+                $reservation_time = Carbon::createFromFormat('H:i:s', $reservation_time)->format('H:i');
+            }
+
+        $number_options = [
+            '1', '2', '3', '4',
+            '5', '6', '7', '8',
+            '9', '10',
+        ];
+
+        $tomorrow = Carbon::tomorrow()->format('Y-m-d');
+
+        return view ('update_reservation', compact('reservation', 'reservation_time', 'number_options', 'tomorrow'));
+    }
+
+    public function updateReservation(UpdateReservationRequest $request)
     {
         $user_id = Auth::id();
 
-        $today = Carbon::today()->format('Y-m-d');
+        $tomorrow = Carbon::tomorrow()->format('Y-m-d');
+        $now = Carbon::now()->format('H:i:s');
 
         $reservation_data = $request->only(['shop_id', 'date', 'time', 'number']);
 
@@ -188,7 +239,7 @@ class ShopController extends Controller
 
         if($reservation) {
             $reservation->update($reservation_data);
-            return redirect ('/my_page');
+            return redirect ('/my_page')->with('message', '予約を変更しました');
         } else {
             return redirect ('/my_page')->with('error_message', '予約が見つかりません');
         }

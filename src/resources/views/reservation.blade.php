@@ -8,7 +8,7 @@
 <div class="contents">
   <div class="shop-details">
     <div class="shop__name">
-      <a class="return_btn" href="/"><</a>
+      <a class="return-btn" href="/"><</a>
       <h2>{{ $shop->name ?? '' }}</h2>
     </div>
     <div class="shop__img">
@@ -24,7 +24,7 @@
   </div>
 
   <div class="reservation-form">
-    @if($unreviewed_reservation && ($unreviewed_reservation->date < $today || ($unreviewed_reservation->date == $today && $unreviewed_reservation_time < $now)))
+    @if($unreviewed_reservation)
       <div class="reserved">
         <h2>予約状況</h2>
         <table class="confirm__table">
@@ -45,31 +45,36 @@
             <td>{{ $unreviewed_reservation->number ?? ''}} 人</td>
           </tr>
         </table>
-        <button class="reservation-btn modal--open">このお店を評価する</button>
-          <div class="easy-modal modal">
+        @if($unreviewed_reservation->date < $today || ($unreviewed_reservation->date == $today && $unreviewed_reservation_time < $now))
+          <button class="reservation-btn modal--open">このお店を評価する</button>
+        @else
+          <button class="reservation-btn" type="button">まだ評価できません</button>
+        @endif
+          <div class="easy-modal modal" id="review-modal">
             <div class="modal__content">
               <div class="modal__header">
                 <h1>{{ $shop->name }}</h1>
                 <span class="modal--close">×</span>
               </div>
               <div class="modal__body">
-                <div class="reserved__table">
-                <h2>来店記録</h2>
-                <table>
-                  <tr class="reserved__table--row">
-                    <th class="reserved__table--header">Date</th>
-                    <td>{{ $unreviewed_reservation->date ?? ''}}</td>
-                  </tr>
-                  <tr class="reserved__table--row">
-                    <th class="reserved__table--header">Time</th>
-                    <td>{{ $unreviewed_reservation_time ?? ''}}</td>
-                  </tr>
-                  <tr class="reserved__table--row">
-                    <th class="reserved__table--header">Number</th>
-                    <td>{{ $unreviewed_reservation->number ?? ''}} 人</td>
-                  </tr>
-                </table></div>
                 <div class="review-form">
+                  <h2>来店記録</h2>
+                  <div class="reserved-table">
+                    <table>
+                      <tr class="reserved-table__row">
+                        <th class="reserved-table__header">Date</th>
+                        <td>{{ $unreviewed_reservation->date ?? ''}}</td>
+                      </tr>
+                      <tr class="reserved-table__row">
+                        <th class="reserved-table__header">Time</th>
+                        <td>{{ $unreviewed_reservation_time ?? ''}}</td>
+                      </tr>
+                      <tr class="reserved-table__row">
+                        <th class="reserved-table__header">Number</th>
+                        <td>{{ $unreviewed_reservation->number ?? ''}} 人</td>
+                      </tr>
+                    </table>
+                  </div>
                   <form action="/review" method="post">
                   @csrf
                     <input type="hidden" name="reservation_id" value="{{ $unreviewed_reservation->id }}">
@@ -91,14 +96,19 @@
                       <input class="rating-form__input" id="star5" name="rating" type="radio" value="5">
                       <label class="rating-form__label" for="star5"><i class="fa-solid fa-star"></i></label>
                     </div>
-                    <div class="form__error">
-                      @error('rating')
+                      <div class="review-form__error">
+                        @error('rating')
+                        ※ {{ $message }}
+                        @enderror
+                      </div>
+                    <h2 class="comment__title">ご意見・ご感想(100字以内)</h2>
+                    <input class="comment-form" type="text" name="comment" value="{{ old('comment') }}">
+                    <div class="review-form__error">
+                      @error('comment')
                       ※ {{ $message }}
                       @enderror
                     </div>
-                    <h2 class="comment__title">ご意見・ご感想</h2>
-                    <input class="comment-form" type="text" name="comment" value="{{ old('comment') }}">
-                    <div class="reservation-btn">
+                    <div class="center">
                       <button class="common-btn" type="submit">評価を送信する</button>
                     </div>
                   </form>
@@ -182,13 +192,13 @@ $(function(){
     $("#submit_form").submit();
   });
 
-  var date = $('.date_form').val();
+  var date = $('.date-form').val();
   $('.date-area').html(date);
 
-  var time = $('.time_form').val();
+  var time = $('.time-form').val();
   $('.time-area').html(time);
 
-  var number = $('.number_form').val();
+  var number = $('.number-form').val();
   if (!number) {
     $('.number-area').html('');
   } else {
@@ -197,12 +207,11 @@ $(function(){
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-  // モーダルを開くボタンをすべて取得
   const buttonsOpen = document.querySelectorAll('.modal--open');
   const modals = document.querySelectorAll('.easy-modal');
   const buttonsClose = document.querySelectorAll('.modal--close');
 
-  // 各ボタンにイベントリスナーを設定
+  // モーダルを開くボタンのイベントリスナーを設定
   buttonsOpen.forEach((button, index) => {
     button.addEventListener('click', function () {
       modals[index].style.display = 'block';
@@ -219,11 +228,16 @@ document.addEventListener('DOMContentLoaded', function () {
   // モーダルの外側をクリックしたら閉じる
   window.addEventListener('click', function (event) {
     modals.forEach(modal => {
-      if (event.target == modal) {
+      if (event.target === modal) {
         modal.style.display = 'none';
       }
     });
   });
+
+  // バリデーションエラーがあった場合、モーダルを開く
+  @if (session('open_modal'))
+    document.getElementById('review-modal').style.display = 'block';
+  @endif
 });
 </script>
 @endsection

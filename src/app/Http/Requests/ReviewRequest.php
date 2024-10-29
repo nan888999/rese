@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class ReviewRequest extends FormRequest
 {
@@ -15,7 +16,7 @@ class ReviewRequest extends FormRequest
     {
         return [
                 'rating' => 'required | integer | between:1,5',
-                'comment' => 'string | max:100',
+                'comment' => 'nullable | string | max:100',
             ];
     }
 
@@ -29,5 +30,23 @@ class ReviewRequest extends FormRequest
             'comment.string' => '文字列で入力してください',
             'comment.max' => '100字以内で入力してください',
         ];
+    }
+
+    /**
+     * @Override
+     * 勝手にリダイレクトさせない
+     * @param  \Illuminate\Contracts\Validation\Validator  $validator
+     */
+    protected function failedValidation(Validator $validator)
+    {
+    }
+
+    /**
+     * バリデータを取得する
+     * @return  \Illuminate\Contracts\Validation\Validator  $validator
+     */
+    public function getValidator()
+    {
+        return $this->validator;
     }
 }

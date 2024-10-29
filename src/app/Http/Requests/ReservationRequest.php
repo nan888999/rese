@@ -9,8 +9,6 @@ use Carbon\Carbon;
 
 class ReservationRequest extends FormRequest
 {
-    protected $redirect = '/login';
-
     public function authorize()
     {
         return true;

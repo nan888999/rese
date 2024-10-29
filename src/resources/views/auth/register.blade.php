@@ -4,10 +4,6 @@
 <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
 @endsection
 
-@section('header')
-<div class="header_title">Rese</div>
-@endsection
-
 @section('main')
 <div class="title">Registration</div>
 <form action="/register" class="register-form" method="post">

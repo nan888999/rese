@@ -1,23 +1,3 @@
-input,
-select {
-  height: 25px;
-  border: 1px solid lightgray;
-  border-radius: 3px;
-  margin: 5px 0;
-  padding: 5px;
-}
-
-input.date_form {
-  width: 40%;
-  max-width: 200px;
-}
-
-input.time_form,
-select.number_form {
-  width: 75%;
-  max-width: 360px;
-}
-
 /* 予約状況 */
 .contents {
   margin: 20px 8vw;
@@ -40,7 +20,7 @@ select.number_form {
   width: 25vw;
   max-width: 400px;
   min-width: 280px;
-  height: 200px;
+  height: 230px;
   margin-bottom: 30px;
   padding: 15px;
   background-color: rgb(58, 103, 250);
@@ -96,63 +76,6 @@ th.reservation-table__header {
   margin-top: 10px;
 }
 
-/* modal */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal__content {
-  background-color: #f4f4f4;
-  margin: 20% auto;
-  width: 80%;
-  max-width: 400px;
-  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
-  animation-name: modal-open;
-  animation-duration: 1s;
-}
-
-@keyframes modal-open {
-  from {
-    opacity: 0
-  }
-
-  to {
-    opacity: 1
-  }
-}
-
-.modal__header h1 {
-  margin: 1rem 0;
-}
-
-.modal__header {
-  background: lightblue;
-  padding: 3px 15px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.modal--close {
-  font-size: 2rem;
-}
-
-.modal--close:hover {
-  cursor: pointer;
-}
-
-.modal__body {
-  padding: 10px 20px;
-  color: black;
-}
-
 /* お気に入り店舗 */
 .favorite-list {
   margin: 10px 0 20px 8vw;
@@ -180,7 +103,7 @@ th.reservation-table__header {
 .shop-card {
   width: 220px;
   background-color: white;
-  height: 200px;
+  height: 230px;
   box-shadow: 2px 2px 3px #6c6b6b;
   border-radius: 5px;
   overflow: hidden;
@@ -188,7 +111,7 @@ th.reservation-table__header {
 }
 
 .shop__img {
-  height: 100px;
+  height: 110px;
 }
 
 .shop__img img {

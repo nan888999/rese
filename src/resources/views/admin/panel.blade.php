@@ -2,10 +2,14 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/panel.css') }}">
 @endsection
 
-@section('header')
-<div class="header_title">管理者用Rese</div>
+@section('header__contents')
+<div class="menu-buttons">
+  <button onclick="location.href='/admin/panel'" class="common-btn">店舗代表者登録</button>
+  <button onclick="location.href='/admin/mail'" class="common-btn">メール</button>
+</div>
 @endsection
 
 @section('main')

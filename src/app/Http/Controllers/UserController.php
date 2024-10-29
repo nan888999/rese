@@ -62,13 +62,14 @@ class UserController extends Controller
         {
             $user = Auth::user();
 
-            if($user->role == 3) {
+            if ($user->role === 3) {
                 $request->session()->regenerate();
-                return redirect()->intended('/admin/manage');
-            }
+                return redirect()->route('index');
 
-            $request->session()->regenerate();
-            return redirect()->intended('/');
+            } else {
+                $request->session()->regenerate();
+                return redirect()->route('admin.index');
+            }
         }
         return back()->with(
             'error_message', 'メールアドレスかパスワードが一致しません'

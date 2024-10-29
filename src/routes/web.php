@@ -21,9 +21,9 @@ Route::get('/email/verify/{id}/{hash}', [UserController::class, 'emailVerified']
 
 // 認証が必要なルート
 Route::middleware(['check.session'])->group(function () {
-  Route::get('/', [ShopController::class, 'getShopsView']);
+  Route::get('/', [ShopController::class, 'getShopsView'])->name('index');
 
-  Route::get('/logout', [UserController::class, 'logout']);
+  Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
   Route::get('/shop_details', [ShopController::class, 'showShopDetails'])->name('shop.details');
 
@@ -41,6 +41,7 @@ Route::middleware(['check.session'])->group(function () {
 
   Route::post('/cancel_reservation', [ShopController::class, 'cancelReservation']);
 
+  Route::get('/update_reservation', [ShopController::class, 'showUpdateReservationForm']);
   Route::post('/update_reservation', [ShopController::class, 'updateReservation']);
 
   Route::post('/review', [ShopController::class, 'review']);
@@ -62,5 +63,9 @@ Route::middleware(['check.manager'])->group(function() {
 
 Route::middleware(['check.admin'])->group(function() {
   Route::get('/admin/panel', [AdminController::class, 'viewAdminPanel']);
+
   Route::post('/admin/register', [AdminController::class, 'register']);
+
+  Route::get('/admin/mail', [AdminController::class, 'viewAdminMailForm']);
+  Route::post('/admin/mail', [AdminController::class, 'sendAdminMail']);
 });

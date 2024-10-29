@@ -6,7 +6,7 @@
 
 @section('main')
 <div class="title">Login</div>
-<form action="/login" class="login-form" method="post">
+<form action="{{ route('login') }}" class="login-form" method="post">
   @csrf
   <div class="login-form__email">
     <i class="fa-solid fa-envelope" style="color: #44526a;"></i>
