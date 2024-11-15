@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FeedbackController;
 
 Route::get('/login', [UserController::class, 'viewLogin']);
 Route::post('/login', [UserController::class, 'login'])->name('login');
@@ -31,9 +32,9 @@ Route::middleware(['check.session'])->group(function () {
 
   Route::get('/shop_details', [ShopController::class, 'showShopDetails'])->name('shop.details');
 
-  Route::post('/reservation_confirm', [ShopController::class, 'showReservationConfirm']);
+  Route::post('/reservation_confirm', [ReservationController::class, 'showReservationConfirm']);
 
-  Route::post('/reservation', [ShopController::class, 'reservation']);
+  Route::post('/reservation', [ReservationController::class, 'reservation']);
 
   Route::get('/done', function () {
     return view('done');
@@ -47,12 +48,15 @@ Route::middleware(['check.session'])->group(function () {
 
   Route::get('/my_page', [ShopController::class, 'myPage']);
 
-  Route::post('/cancel_reservation', [ShopController::class, 'cancelReservation']);
+  Route::post('/cancel_reservation', [ReservationController::class, 'cancelReservation']);
 
-  Route::get('/update_reservation', [ShopController::class, 'showUpdateReservationForm']);
-  Route::post('/update_reservation', [ShopController::class, 'updateReservation']);
+  Route::get('/update_reservation', [ReservationController::class, 'showUpdateReservationForm']);
+  Route::post('/update_reservation', [ReservationController::class, 'updateReservation']);
 
   Route::post('/review', [ShopController::class, 'review']);
+
+  Route::get('/feedback', [FeedbackController::class, 'viewFeedbackForm']);
+  Route::post('/feedback', [FeedbackController::class, 'feedback']);
 });
 
 // 店舗代表者権限が必要なルート

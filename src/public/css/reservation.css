@@ -46,6 +46,15 @@ select {
   margin: 10px 0;
 }
 
+.feedback {
+  margin: 10px 0;
+}
+
+a.feedback-link {
+  text-decoration: underline;
+  color: black;
+}
+
 /* 予約フォーム */
 .reservation-form {
   width: 40vw;

@@ -25,7 +25,7 @@
           <span class="hamburger-menu__bar"></span>
           <span class="hamburger-menu__bar"></span>
         </button>
-        <div class="header__title">Rese</div>
+        <h1 class="header__title">Rese</h1>
       </div>
       <div class="header__contents">
         @yield('header__contents')
