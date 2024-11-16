@@ -202,14 +202,16 @@ class ShopController extends Controller
                 $shops_query->inRandomOrder();
             } elseif ($sort_option === 'high' || $sort_option === 'low') {
                 $shops_query->leftJoin(
-                    DB::raw('(SELECT shop_id, COALESCE(AVG(rating), 0) as average_feedback_rating FROM feedbacks GROUP BY shop_id) as avg_ratings'),
+                    DB::raw('(SELECT shop_id, AVG(rating) as average_feedback_rating FROM feedbacks GROUP BY shop_id) as avg_ratings'),
                     'shops.id', '=', 'avg_ratings.shop_id'
                 );
-                if ($sort_option === 'high') {
-                    $shops_query->orderBy('avg_ratings.average_feedback_rating', 'desc');
-                } elseif ($sort_option === 'low') {
-                    $shops_query->orderBy('avg_ratings.average_feedback_rating', 'asc');
-                }
+
+                $is_null_order = 'ISNULL(avg_ratings.average_feedback_rating) asc';
+                $average_order = $sort_option === 'high' 
+                    ? 'avg_ratings.average_feedback_rating desc' 
+                    : 'avg_ratings.average_feedback_rating asc';
+
+                $shops_query->orderByRaw($is_null_order)->orderByRaw($average_order);
             } else {
                 return redirect()->back()->with('error_message', 'エラーが発生しました');
             }

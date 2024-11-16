@@ -7,55 +7,54 @@
 @section('header__contents')
 <form action="/search" method="get">
   @csrf
-  <div class="sort-form">
-    <select name="sort" id="sort-form__select" class="sort__select" onchange="submit(this.form)">
-      <option value="" disabled class="option__title" selected>並び替え：高/低</option>
-      <option value="random" class="sort__option"
-        @if(!empty($sort_option) && $sort_option === 'random' )
-          selected
-        @endif >ランダム</option>
-      <option value="high" class="sort__option"
-        @if(!empty($sort_option) && $sort_option === 'high' )
-          selected
-        @endif >評価が高い順</option>
-      <option value="low" class="sort__option"
-        @if(!empty($sort_option) && $sort_option === 'low' )
-          selected
-        @endif >評価が低い順</option>
-    </select>
-  </div>
-  <div class="search-form">
-    <div class="search-form__select-area">
-      <select name="area" class="search-form__select" id="area-select" onchange="submit(this.form)">
-        <option value="" disabled class="option__title" selected>All area</option>
-        @foreach($areas as $area)
-          <option value="{{ $area->id }}"
-            @if(!empty($area_id) && $area_id == $area->id )
-              selected
-            @endif
-          >
-          {{ $area->name }}
-          </option>
-        @endforeach
-      </select>
-      <select name="category" class="search-form__select" id="category-select" onchange="submit(this.form)">
-        <option value="" disabled class="option__title" selected>All genre</option>
-        @foreach($categories as $category)
-          <option value="{{ $category->id }}"
-            @if(!empty($category_id) && $category_id == $category->id )
-              selected
-            @endif
-          >
-          {{ $category->name }}
-          </option>
-        @endforeach
+  <div class="header-forms">
+    <div class="sort-form">
+      <select name="sort" id="sort-form__select" onchange="submit(this.form)">
+        <option value="" disabled class="option__title" selected>並び替え：評価高/低</option>
+        <option value="random" class="sort__option">ランダム</option>
+        <option value="high" class="sort__option"
+          @if(!empty($sort_option) && $sort_option === 'high' )
+            selected
+          @endif >評価が高い順</option>
+        <option value="low" class="sort__option"
+          @if(!empty($sort_option) && $sort_option === 'low' )
+            selected
+          @endif >評価が低い順</option>
       </select>
     </div>
-    <div class="search-form__keyword-area">
-      <button type="submit" class="no-btn-shape">
-        <i class="fa-solid fa-magnifying-glass light-gray-icon"></i>
-      </button>
-      <input type="text" class="search-form__keyword" name="keyword" placeholder="Search..." value="{{ $keyword ?? '' }}">
+    <div class="search-form">
+      <div class="search-form__select-area">
+        <select name="area" class="search-form__select" id="area-select" onchange="submit(this.form)">
+          <option value="" disabled class="option__title" selected>All area</option>
+          @foreach($areas as $area)
+            <option value="{{ $area->id }}"
+              @if(!empty($area_id) && $area_id == $area->id )
+                selected
+              @endif
+            >
+            {{ $area->name }}
+            </option>
+          @endforeach
+        </select>
+        <select name="category" class="search-form__select" id="category-select" onchange="submit(this.form)">
+          <option value="" disabled class="option__title" selected>All genre</option>
+          @foreach($categories as $category)
+            <option value="{{ $category->id }}"
+              @if(!empty($category_id) && $category_id == $category->id )
+                selected
+              @endif
+            >
+            {{ $category->name }}
+            </option>
+          @endforeach
+        </select>
+      </div>
+      <div class="search-form__keyword-area">
+        <button type="submit" class="no-btn-shape">
+          <i class="fa-solid fa-magnifying-glass light-gray-icon"></i>
+        </button>
+        <input type="text" class="search-form__keyword" name="keyword" placeholder="Search..." value="{{ $keyword ?? '' }}">
+      </div>
     </div>
   </div>
 </form>

@@ -57,20 +57,20 @@
       <input type="hidden" name="shop_id" value="{{ $shop->id }}">
       <h3 class="feedback-label">体験を評価してください</h3>
       <div class="rating-form">
-        <input class="rating-form__input" id="star1" name="rating" type="radio" value="5" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 5)) ? 'checked' : '' }}>
-        <label class="rating-form__label" for="star1">★</label>
+        <input class="rating-form__input" id="star5" name="rating" type="radio" value="5" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 5)) ? 'checked' : '' }}>
+        <label class="rating-form__label" for="star5">★</label>
 
-        <input class="rating-form__input" id="star2" name="rating" type="radio" value="4" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 4)) ? 'checked' : '' }}>
-        <label class="rating-form__label" for="star2">★</label>
+        <input class="rating-form__input" id="star4" name="rating" type="radio" value="4" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 4)) ? 'checked' : '' }}>
+        <label class="rating-form__label" for="star4">★</label>
 
         <input class="rating-form__input" id="star3" name="rating" type="radio" value="3" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 3)) ? 'checked' : '' }}>
         <label class="rating-form__label" for="star3">★</label>
 
-        <input class="rating-form__input" id="star4" name="rating" type="radio" value="2" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 2)) ? 'checked' : '' }}>
-        <label class="rating-form__label" for="star4">★</label>
+        <input class="rating-form__input" id="star2" name="rating" type="radio" value="2" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 2)) ? 'checked' : '' }}>
+        <label class="rating-form__label" for="star2">★</label>
 
-        <input class="rating-form__input" id="star5" name="rating" type="radio" value="1" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 1)) ? 'checked' : '' }}>
-        <label class="rating-form__label" for="star5">★</label>
+        <input class="rating-form__input" id="star1" name="rating" type="radio" value="1" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 1)) ? 'checked' : '' }}>
+        <label class="rating-form__label" for="star1">★</label>
       </div>
       <div class="feedback-form__error">
         @error('rating')

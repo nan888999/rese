@@ -3,12 +3,21 @@
 }
 
 /* 検索フォーム */
+.header-forms {
+  display: flex;
+  gap: 20px;
+}
+
+.sort-form,
 .search-form {
   margin: 20px 0;
   background-color: white;
   border: 1px solid lightgray;
   border-radius: 3px;
   box-shadow: 2px 2px 3px #6c6b6b;
+}
+
+.search-form {
   position: relative;
 }
 
@@ -35,11 +44,16 @@
   display: inline;
 }
 
+#sort-form__select,
 .search-form__select,
 .search-form__keyword {
   padding: 10px;
   border: none;
   margin: 0;
+}
+
+#sort-form__select {
+  appearance: none;
 }
 
 .light-gray-icon {
@@ -116,12 +130,16 @@
     margin: 20px auto;
   }
 
+  .header-forms {
+    display: block;
+  }
+
   .shop-card {
     margin: 10px auto;
   }
 }
 
-@media screen and (max-width: 484px) {
+@media screen and (max-width: 504px) {
   .header__items {
     display: block;
     margin: 20px 8vw;
