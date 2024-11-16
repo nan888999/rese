@@ -102,3 +102,14 @@
   display: flex;
   justify-content: space-between;
 }
+
+@media screen and (max-width: 768px) {
+  .main {
+    width: 90vw;
+    margin: 20px auto;
+  }
+
+  .shop-card {
+    margin: 10px auto;
+  }
+}

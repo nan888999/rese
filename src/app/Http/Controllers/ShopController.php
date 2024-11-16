@@ -12,6 +12,7 @@ use App\Models\Area;
 use App\Models\Category;
 use App\Models\Favorite;
 use App\Models\Review;
+use App\Models\Feedback;
 use Carbon\Carbon;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -68,12 +69,15 @@ class ShopController extends Controller
         // QRコードの生成処理
         $qr_code = QrCode::size(100)->generate(url('/manager/reservation/today?shop_id=' . $shop_id));
 
+        // 過去の口コミデータ
+        $previous_feedback = Feedback::where('user_id', $user_id)->where('shop_id', $shop_id)->first();
+
         if($unreviewed_reservation) {
             $unreviewed_reservation_time = Carbon::createFromFormat('H:i:s', $unreviewed_reservation->time)->format('H:i');
 
-            return view('reservation', compact('shop','today', 'now', 'number_options', 'reservation', 'unreviewed_reservation', 'unreviewed_reservation_time', 'qr_code'));
+            return view('reservation', compact('shop','today', 'now', 'number_options', 'reservation', 'unreviewed_reservation', 'unreviewed_reservation_time', 'qr_code', 'previous_feedback'));
         } else {
-            return view('reservation', compact('shop','today', 'now', 'number_options', 'reservation', 'unreviewed_reservation', 'qr_code'));
+            return view('reservation', compact('shop','today', 'now', 'number_options', 'reservation', 'unreviewed_reservation', 'qr_code', 'previous_feedback'));
         }
     }
 

@@ -153,6 +153,10 @@ span.hamburger-menu__bar {
   background-color: blue;
 }
 
+a.common-btn-link {
+  color: white;
+}
+
 /* お気に入りボタン */
 .favorite-btn--on,
 .favorite-btn--off {

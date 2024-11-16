@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             CategoriesTableSeeder::class,
             ShopsTableSeeder::class,
             ReservationsTableSeeder::class,
+            FeedbacksTableSeeder::class,
         ]);
     }
 }

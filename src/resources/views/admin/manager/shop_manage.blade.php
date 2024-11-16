@@ -138,8 +138,11 @@
           <form action="/manager/reservation" method="get">
             @csrf
             <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-            <button type="submit" class="common-btn">予約情報の確認</button>
+            <button type="submit" class="common-btn">予約情報</button>
           </form>
+          <button class="common-btn">
+            <a class="common-btn-link" href="/manager/feedback/all?shop_id={{ $shop->id }}">口コミ</a>
+          </button>
           <form action="/manager/edit_shop" method="get">
             @csrf
             <input type="hidden" name="shop_id" value="{{ $shop->id }}">

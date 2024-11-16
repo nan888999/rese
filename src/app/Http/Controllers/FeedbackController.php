@@ -59,4 +59,33 @@ class FeedbackController extends Controller
             return redirect()->back()->with('message', '口コミを投稿しました');
         }
     }
+
+    public function deleteFeedback(Request $request)
+    {
+        $feedback_id = $request->input('feedback_id');
+        if($feedback_id) {
+            $feedback = Feedback::find($feedback_id);
+            $feedback_user_id = $feedback->user_id;
+            $user_id = Auth::id();
+            if($feedback_user_id == $user_id) {
+                $feedback->delete();
+                return redirect()->back()->with('message', '口コミを削除しました');
+            } else {
+                return redirect()->back()->with('error_message', 'この口コミは削除できません');
+            }
+        } else {
+            return redirect()->back()->with('error_message', '口コミが見つかりません');
+        }
+    }
+
+    public function showAllFeedbacks(Request $request)
+    {
+        $user_id = Auth::id();
+        $shop_id = $request->input('shop_id');
+        $shop = Shop::find($shop_id);
+        $favorite_shop = Favorite::where('user_id', $user_id)->where('shop_id', $shop_id)->first();
+        $feedbacks = Feedback::where('shop_id', $shop_id)->get();
+
+        return view('all_feedbacks', compact('shop','favorite_shop' ,'feedbacks'));
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AdminRegisterRequest;
 use App\Http\Requests\ManageShopRequest;
 use App\Http\Requests\AdminMailRequest;
@@ -12,12 +13,25 @@ use App\Models\Shop;
 use App\Models\Reservation;
 use App\Models\Area;
 use App\Models\Category;
+use App\Models\Feedback;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AdminMail;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Carbon\Carbon;
 
 class AdminController extends Controller
 {
+    public function showShopDetails(Request $request)
+    {
+        $shop_id = $request->input('shop_id');
+        $shop = Shop::where('id', $shop_id)->first();
+
+        // QRコードの生成処理
+        $qr_code = QrCode::size(100)->generate(url('/manager/reservation/today?shop_id=' . $shop_id));
+
+        return view('admin.manager.shop_details', compact('shop', 'qr_code'));
+    }
+
     public function viewShopManage(Request $request)
     {
         // 検索フォーム表示
@@ -159,5 +173,26 @@ class AdminController extends Controller
         ->get();
 
         return view ('admin.manager.reservation', compact('shop_name', 'reservations'));
+    }
+
+    public function showAllFeedbacks(Request $request)
+    {
+        $user_role = Auth::user()->role;
+        $shop_id = $request->input('shop_id');
+        $shop = Shop::find($shop_id);
+        $feedbacks = Feedback::where('shop_id', $shop_id)->get();
+
+        return view('admin.manager.all_feedbacks', compact('user_role', 'shop','feedbacks'));
+    }
+
+    public function deleteFeedback(Request $request)
+    {
+        $feedback_id = $request->input('feedback_id');
+        if($feedback_id) {
+            Feedback::find($feedback_id)->delete();
+            return redirect()->back()->with('message', '口コミを削除しました');
+        } else {
+            return redirect()->back()->with('error_message', '口コミが見つかりません');
+        }
     }
 }

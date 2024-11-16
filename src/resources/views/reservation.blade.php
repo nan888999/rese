@@ -2,6 +2,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/reservation.css') }}">
+<link rel="stylesheet" href="{{ asset('css/feedback.css') }}">
 @endsection
 
 @section('main')
@@ -29,32 +30,28 @@
         <a href="/feedback?shop_id={{ $shop->id }}" class="feedback-link">口コミを投稿する</a>
       </div>
     @else
-      <a href="/all_feedbacks" class="show-feedbacks-btn">
+      <a href="/feedback/all?shop_id={{ $shop->id }}" class="show-feedbacks-btn">
         全ての口コミ情報
       </a>
-      <div class="edit-feedback-menu">
-        <a href="/feedback">口コミを編集</a>
-        <a href="/delete_feedback">口コミを削除</a>
-      </div>
+      <hr class="start-line">
       <div class="my-feedback">
-        <div class="rating-form">
-          <input class="rating-form__input" id="star1" name="rating" type="radio" value="1" checked readonly>
-          <label class="rating-form__label" for="star1"><i class="fa-solid fa-star"></i></label>
-
-          <input class="rating-form__input" id="star2" name="rating" type="radio" value="2" {{ $previous_feedback->rating == 2 ? 'checked' : '' }} readonly>
-          <label class="rating-form__label" for="star2"><i class="fa-solid fa-star"></i></label>
-
-          <input class="rating-form__input" id="star3" name="rating" type="radio" value="3" {{ $previous_feedback->rating == 3 ? 'checked' : '' }} readonly>
-          <label class="rating-form__label" for="star3"><i class="fa-solid fa-star"></i></label>
-
-          <input class="rating-form__input" id="star4" name="rating" type="radio" value="4" {{ $previous_feedback->rating == 4 ? 'checked' : '' }} readonly>
-          <label class="rating-form__label" for="star4"><i class="fa-solid fa-star"></i></label>
-
-          <input class="rating-form__input" id="star5" name="rating" type="radio" value="5" {{ $previous_feedback->rating == 5 ? 'checked' : '' }} readonly>
-          <label class="rating-form__label" for="star5"><i class="fa-solid fa-star"></i></label>
+        <div class="edit-feedback-menu">
+          <a class="edit-feedback-link" href="/feedback?shop_id={{ $shop->id }}">口コミを編集</a>
+          <a class="edit-feedback-link" href="/feedback/delete?feedback_id={{ $previous_feedback->id }}">口コミを削除</a>
         </div>
-        {{ $previous_feedback->comment ?? '' }}
+        <div class="feedback__rating-area">
+          <div class="feedback__rating--blue">★</div>
+          <div class="@if($previous_feedback->rating >= 2) feedback__rating--blue @else feedback__rating--gray @endif">★</div>
+          <div class="@if($previous_feedback->rating >= 3) feedback__rating--blue @else feedback__rating--gray @endif">★</div>
+          <div class="@if($previous_feedback->rating >= 4) feedback__rating--blue @else feedback__rating--gray @endif">★</div>
+          <div class="@if($previous_feedback->rating == 5) feedback__rating--blue @else feedback__rating--gray @endif">★</div>
+        </div>
+        <div class="feedback__comment-area">
+          {{ $previous_feedback->comment ?? '' }}
+        </div>
       </div>
+      <hr class="end-line">
+    @endif
   </div>
 
   <div class="reservation-form">

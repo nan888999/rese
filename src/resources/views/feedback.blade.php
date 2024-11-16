@@ -105,8 +105,8 @@
       </div>
 
       @if(session('uploaded_img'))
-    <p>Uploaded Image Path: {{ session('uploaded_img') }}</p>
-@endif
+        <p>Uploaded Image Path: {{ session('uploaded_img') }}</p>
+      @endif
 
       @if(isset($previous_feedback) && $previous_feedback->img_path)
         <h2 class="feedback-label">過去の投稿画像</h2>

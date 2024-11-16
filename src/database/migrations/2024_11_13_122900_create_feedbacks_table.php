@@ -13,7 +13,7 @@ class CreateFeedbacksTable extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('shop_id')->constrained('shops')->cascadeOnUpdate()->cascadeOnDelete();
             $table->tinyInteger('rating');
-            $table->string('comment')->nullable();
+            $table->string('comment', 400)->nullable();
             $table->string('img_path')->nullable();
             $table->timestamps();
         });

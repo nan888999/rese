@@ -57,10 +57,16 @@ Route::middleware(['check.session'])->group(function () {
 
   Route::get('/feedback', [FeedbackController::class, 'viewFeedbackForm']);
   Route::post('/feedback', [FeedbackController::class, 'feedback']);
+
+  Route::get('feedback/delete', [FeedbackController::class, 'deleteFeedback']);
+
+  Route::get('feedback/all', [FeedbackController::class, 'showAllFeedbacks']);
 });
 
 // 店舗代表者権限が必要なルート
 Route::middleware(['check.manager'])->group(function() {
+  Route::get('/manager/shop_details', [AdminController::class, 'showShopDetails']);
+
   Route::get('/manager/shop_manage', [AdminController::class, 'viewShopManage'])->name('admin.index');
 
   Route::get('/manager/search', [AdminController::class, 'search']);
@@ -73,6 +79,8 @@ Route::middleware(['check.manager'])->group(function() {
   Route::get('/manager/reservation', [AdminController::class, 'showReservation']);
 
   Route::get('/manager/reservation/today', [AdminController::class, 'showTodayReservation']);
+
+  Route::get('/manager/feedback/all', [AdminController::class, 'showAllFeedbacks']);
 });
 
 Route::middleware(['check.admin'])->group(function() {
@@ -82,4 +90,6 @@ Route::middleware(['check.admin'])->group(function() {
 
   Route::get('/admin/mail', [AdminController::class, 'viewAdminMailForm']);
   Route::post('/admin/mail', [AdminController::class, 'sendAdminMail']);
+
+  Route::get('/admin/feedback/delete', [AdminController::class, 'deleteFeedback']);
 });

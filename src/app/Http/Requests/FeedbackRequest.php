@@ -14,9 +14,9 @@ class FeedbackRequest extends FormRequest
     public function rules()
     {
         return [
-                'rating' => 'required | integer | between:1,5',
-                'comment' => 'nullable | string | max:400',
-                'img' => 'file | image | mimes:jpeg,png, jpg | max:1024'
+                'rating' => 'required|integer|between:1,5',
+                'comment' => 'nullable|string|max:400',
+                'img' => 'file|mimes:jpeg,png|max:1024'
             ];
     }
 
@@ -30,8 +30,7 @@ class FeedbackRequest extends FormRequest
             'comment.string' => '文字列で入力してください',
             'comment.max' => '400字以内で入力してください',
             'img.file' => '画像ファイルをアップロードしてください。',
-            'img.image' => '画像ファイルをアップロードしてください',
-            'img.mimes' => '画像形式はJPEG、PNG、JPGのみアップロード可能です',
+            'img.mimes' => '画像形式はJPEG、PNGのみアップロード可能です',
             'img.max' => '画像のサイズは最大1MBまでです',
         ];
     }
