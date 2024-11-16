@@ -8,7 +8,7 @@
   margin: 20px 8vw 0 2vw;
 }
 
-h1.page-title {
+h2.page-title {
   font-size: 32px;
   font-weight: 400;
 }
@@ -52,7 +52,7 @@ h1.page-title {
   justify-content: space-between;
 }
 
-h2.feedback-label {
+h3.feedback-label {
   font-size: 18px;
   font-weight: 400;
   margin: 10px 0;

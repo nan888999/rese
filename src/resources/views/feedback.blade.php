@@ -7,7 +7,7 @@
 @section('main')
 <div class="contents-flex">
   <div class="shop-view">
-    <h1 class="page-title">今回のご利用はいかがでしたか？</h1>
+    <h2 class="page-title">今回のご利用はいかがでしたか？</h2>
     <div class="shop-card">
       <div class="shop__img-area">
         <img class="shop__img-body" src="{{ $shop->img_url ?? '' }}" alt="
@@ -55,29 +55,29 @@
   @csrf
     <div class="feedback-contents">
       <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-      <h2 class="feedback-label">体験を評価してください</h2>
+      <h3 class="feedback-label">体験を評価してください</h3>
       <div class="rating-form">
-        <input class="rating-form__input" id="star1" name="rating" type="radio" value="1" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 1)) ? 'checked' : '' }}>
-        <label class="rating-form__label" for="star1"><i class="fa-solid fa-star"></i></label>
+        <input class="rating-form__input" id="star1" name="rating" type="radio" value="5" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 5)) ? 'checked' : '' }}>
+        <label class="rating-form__label" for="star1">★</label>
 
-        <input class="rating-form__input" id="star2" name="rating" type="radio" value="2" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 2)) ? 'checked' : '' }}>
-        <label class="rating-form__label" for="star2"><i class="fa-solid fa-star"></i></label>
+        <input class="rating-form__input" id="star2" name="rating" type="radio" value="4" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 4)) ? 'checked' : '' }}>
+        <label class="rating-form__label" for="star2">★</label>
 
         <input class="rating-form__input" id="star3" name="rating" type="radio" value="3" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 3)) ? 'checked' : '' }}>
-        <label class="rating-form__label" for="star3"><i class="fa-solid fa-star"></i></label>
+        <label class="rating-form__label" for="star3">★</label>
 
-        <input class="rating-form__input" id="star4" name="rating" type="radio" value="4" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 4)) ? 'checked' : '' }}>
-        <label class="rating-form__label" for="star4"><i class="fa-solid fa-star"></i></label>
+        <input class="rating-form__input" id="star4" name="rating" type="radio" value="2" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 2)) ? 'checked' : '' }}>
+        <label class="rating-form__label" for="star4">★</label>
 
-        <input class="rating-form__input" id="star5" name="rating" type="radio" value="5" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 5)) ? 'checked' : '' }}>
-        <label class="rating-form__label" for="star5"><i class="fa-solid fa-star"></i></label>
+        <input class="rating-form__input" id="star5" name="rating" type="radio" value="1" {{ (old('rating') ?? ($previous_feedback && $previous_feedback->rating == 1)) ? 'checked' : '' }}>
+        <label class="rating-form__label" for="star5">★</label>
       </div>
       <div class="feedback-form__error">
         @error('rating')
         ※ {{ $message }}
         @enderror
       </div>
-      <h2 class="feedback-label">口コミを投稿</h2>
+      <h3 class="feedback-label">口コミを投稿</h3>
       <div class="word-count-form">
         <textarea id="comment-form" name="comment" value="{{ old('comment') }}" placeholder="カジュアルな夜のお出かけにおすすめのスポット">{{ old('comment') ?? $previous_feedback->comment ?? '' }}</textarea>
         <div class="word-counter">
@@ -90,7 +90,7 @@
         ※ {{ $message }}
         @enderror
       </div>
-      <h2 class="feedback-label">画像の追加</h2>
+      <h3 class="feedback-label">画像の追加</h3>
       <div id="upload-area">
         <p class="upload-text">
           <span class="upload-text__subject">クリックして写真を追加</span>
@@ -109,7 +109,7 @@
       @endif
 
       @if(isset($previous_feedback) && $previous_feedback->img_path)
-        <h2 class="feedback-label">過去の投稿画像</h2>
+        <h3 class="feedback-label">過去の投稿画像</h3>
         <div class="previous-img-area">
           <img class="previous-img" src="{{ $previous_feedback->img_path }}">
         </div>

@@ -222,3 +222,10 @@ a.common-btn-link {
   background-color: red;
 }
 /* お気に入りボタン ここまで */
+
+@media screen and (max-width: 629px) {
+  .header__items {
+    display: block;
+    margin: 20px 8vw;
+  }
+}

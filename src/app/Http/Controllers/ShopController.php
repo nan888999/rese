@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\ReviewRequest;
 use App\Models\User;
@@ -20,8 +21,6 @@ class ShopController extends Controller
 {
     public function getShopsView(Request $request)
     {
-        $user_role = Auth::user()->role;
-
         $user_id = Auth::id();
 
         $shops = Shop::with(['area', 'category'])->select('id', 'name', 'area_id', 'category_id', 'img_url')->get();
@@ -174,31 +173,50 @@ class ShopController extends Controller
     public function search (Request $request)
     {
         $user_id = Auth::id();
-        $query = Shop::query();
+        $shops_query = Shop::with(['area', 'category'])->select('id', 'name', 'area_id', 'category_id', 'img_url');
 
         /* area検索 */
         $areas = Area::select('id', 'name')->get();
         $area_id = $request->input('area');
         if(!empty($area_id)) {
-            $query->where('area_id', '=', $area_id);
+            $shops_query->where('area_id', '=', $area_id);
         }
 
         /* genre検索 */
         $categories = Category::select('id', 'name')->get();
         $category_id = $request->input('category');
         if(!empty($category_id)) {
-            $query->where('category_id', '=', $category_id);
+            $shops_query->where('category_id', '=', $category_id);
         }
 
         /* keyword検索 */
         $keyword = $request->input('keyword');
         if(!empty($keyword)) {
-            $query->where('name', 'LIKE', "%{$keyword}%");
+            $shops_query->where('name', 'LIKE', "%{$keyword}%");
         }
 
-        $shops = $query->get();
-        $favorite_shop_ids = Favorite::where('user_id', $user_id)->pluck('shop_id')->toArray();
+        /* sort機能 */
+        $sort_option = $request->input('sort');
+        if ($sort_option) {
+            if ($sort_option === 'random') {
+                $shops_query->inRandomOrder();
+            } elseif ($sort_option === 'high' || $sort_option === 'low') {
+                $shops_query->leftJoin(
+                    DB::raw('(SELECT shop_id, COALESCE(AVG(rating), 0) as average_feedback_rating FROM feedbacks GROUP BY shop_id) as avg_ratings'),
+                    'shops.id', '=', 'avg_ratings.shop_id'
+                );
+                if ($sort_option === 'high') {
+                    $shops_query->orderBy('avg_ratings.average_feedback_rating', 'desc');
+                } elseif ($sort_option === 'low') {
+                    $shops_query->orderBy('avg_ratings.average_feedback_rating', 'asc');
+                }
+            } else {
+                return redirect()->back()->with('error_message', 'エラーが発生しました');
+            }
+            $shops = $shops_query->get();
+            $favorite_shop_ids = Favorite::where('user_id', $user_id)->pluck('shop_id')->toArray();
 
-        return view ('index', compact('shops', 'areas', 'area_id', 'keyword', 'categories', 'category_id', 'favorite_shop_ids'));
+            return view ('index', compact('shops', 'areas', 'area_id', 'keyword', 'categories', 'category_id', 'sort_option', 'favorite_shop_ids'));
+        }
     }
 }
