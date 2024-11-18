@@ -51,11 +51,11 @@
 ![newER](https://github.com/user-attachments/assets/9bcf1b8b-fb30-468c-940d-d46af36e2e6c)
 
 ## 環境構築
-- Dockerビルド
+### Dockerビルド
 1. git clone リンク
 2. docker compose up -d --build
 
-- Laravel環境構築
+### Laravel環境構築
 1. docker-compose exec php bash
 2. composer install
 3. composer require simplesoftwareio/simple-qrcode
