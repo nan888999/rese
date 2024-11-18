@@ -81,7 +81,6 @@
 - パスワード「password」(全アカウント共通)
 
 ## CSVインポート機能について
-下記のようなCSVファイルを作成しインポートすることで、店舗作成をすることができます。
-エリアIDとジャンルIDはareasテーブルとcategoriesテーブルのIDにそれぞれ対応します。
-
+下記のようなCSVファイルを作成しインポートすることで、店舗作成をすることができます。<br>
+エリアIDとジャンルIDはareasテーブルとcategoriesテーブルのIDにそれぞれ対応します。<br>
 ![csv_example](https://github.com/user-attachments/assets/f9be6c99-21ba-4ae3-8fa3-9f2a6b34b22f)
