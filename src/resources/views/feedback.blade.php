@@ -134,112 +134,95 @@
     length.textContent = textArea.value.length;
   }, false);
 
-// 1MB制限
-const sizeLimit = 1024 * 1024 * 1;
-const fileInput = document.getElementById('img-input');
+  // 1MB制限
+  const sizeLimit = 1024 * 1024 * 1;
+  const fileInput = document.getElementById('img-input');
 
-// ファイル選択時のサイズチェック
-const handleFileSelect = () => {
-  const files = fileInput.files;
+  // ファイル選択時のサイズチェック
+  const handleFileSelect = () => {
+    const files = fileInput.files;
 
-  // 複数ファイル選択を防ぐ
-  if (files.length > 1) {
-    alert('1ファイルのみ選択してください');
-    fileInput.value = ''; // リセット
-    removeImagePreview(); // プレビューを削除
-    return;
-  }
+    // 複数ファイル選択を防ぐ
+    if (files.length > 1) {
+      alert('1ファイルのみ選択してください');
+      fileInput.value = ''; // リセット
+      removeImagePreview(); // プレビューを削除
+      return;
+    }
 
-  // ファイルが選択されたらサイズチェック
-  const file = files[0];
+    // ファイルが選択されたらサイズチェック
+    const file = files[0];
 
-  if (file.size > sizeLimit) {
-    alert('ファイルサイズは1MB以下にしてください');
-    fileInput.value = ''; // リセット
-    removeImagePreview(); // プレビューを削除
-  } else {
-    imgPreview(file); // サイズが問題なければプレビュー表示
-  }
-};
-
-fileInput.addEventListener('change', handleFileSelect);
-
-// クリック時の動作
-document.getElementById("upload-area").addEventListener("click", function() {
-  document.getElementById("img-input").click();
-});
-
-// ドラッグ&ドロップ
-const fileArea = document.getElementById('upload-area');
-fileArea.addEventListener('dragover', function(evt) {
-  evt.preventDefault();
-  fileArea.classList.add('dragover');
-});
-fileArea.addEventListener('dragleave', function(evt) {
-  evt.preventDefault();
-  fileArea.classList.remove('dragover');
-});
-fileArea.addEventListener('drop', function(evt) {
-  evt.preventDefault();
-  fileArea.classList.remove('dragover');
-  const files = evt.dataTransfer.files;
-  fileInput.files = files;
-  handleFileSelect(); // ドロップ後にサイズチェック
-});
-
-// ファイル選択時にプレビューを表示するイベントリスナー
-document.getElementById("img-input").addEventListener("change", function(event) {
-    // ここでファイルが選択されていることを確認
-    const files = event.target.files;
-
-    if (files && files.length > 0) {
-        imgPreview(files[0]); // 最初のファイルを渡してプレビューを表示
+    if (file.size > sizeLimit) {
+      alert('ファイルサイズは1MB以下にしてください');
+      fileInput.value = ''; // リセット
+      removeImagePreview(); // プレビューを削除
     } else {
-        console.error("ファイルが選択されていません。");
+      imgPreview(file); // サイズが問題なければプレビュー表示
     }
-});
+  };
 
-// プレビュー表示関数
-function imgPreview(file) {
-    removeImagePreview(); // 既存のプレビューを削除
+  fileInput.addEventListener('change', handleFileSelect);
 
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function() {
-            const preview = document.getElementById("upload-area");
-            const img = document.createElement("img");
-            img.setAttribute("src", reader.result);
-            img.setAttribute("id", "previewImage");
-            img.classList.add("preview-img");
-            preview.appendChild(img); // プレビューエリアに画像を追加
-        };
-        reader.readAsDataURL(file); // ファイルを読み込んでプレビュー表示
-    }
-}
+  // クリック時の動作
+  document.getElementById("upload-area").addEventListener("click", function() {
+    document.getElementById("img-input").click();
+  });
 
-// 既存のプレビューを削除する関数
-function removeImagePreview() {
-    const existingImage = document.getElementById("previewImage");
-    if (existingImage) {
-        existingImage.remove(); // 既存のプレビュー画像を削除
-    }
-}
+  // ドラッグ&ドロップ
+  const fileArea = document.getElementById('upload-area');
+  fileArea.addEventListener('dragover', function(evt) {
+    evt.preventDefault();
+    fileArea.classList.add('dragover');
+  });
+  fileArea.addEventListener('dragleave', function(evt) {
+    evt.preventDefault();
+    fileArea.classList.remove('dragover');
+  });
+  fileArea.addEventListener('drop', function(evt) {
+    evt.preventDefault();
+    fileArea.classList.remove('dragover');
+    const files = evt.dataTransfer.files;
+    fileInput.files = files;
+    handleFileSelect(); // ドロップ後にサイズチェック
+  });
 
+  // ファイル選択時にプレビューを表示するイベントリスナー
+  document.getElementById("img-input").addEventListener("change", function(event) {
+      // ここでファイルが選択されていることを確認
+      const files = event.target.files;
 
-// バリデーションエラー後でもプレビューを保持する処理
-window.addEventListener('load', function() {
-    const oldFilePath = '{{ session('uploaded_img') }}';
-    console.log('Old File Path:', oldFilePath); // デバッグ用
+      if (files && files.length > 0) {
+          imgPreview(files[0]); // 最初のファイルを渡してプレビューを表示
+      } else {
+          console.error("ファイルが選択されていません。");
+      }
+  });
 
-    if (oldFilePath) {
-        const preview = document.getElementById("upload-area");
-        const img = document.createElement("img");
-        img.setAttribute("src", oldFilePath); // 画像パスを設定
-        img.setAttribute("id", "previewImage");
-        img.classList.add("preview-img");
-        preview.appendChild(img);
-    }
-});
+  // プレビュー表示関数
+  function imgPreview(file) {
+      removeImagePreview(); // 既存のプレビューを削除
 
+      if (file) {
+          const reader = new FileReader();
+          reader.onload = function() {
+              const preview = document.getElementById("upload-area");
+              const img = document.createElement("img");
+              img.setAttribute("src", reader.result);
+              img.setAttribute("id", "previewImage");
+              img.classList.add("preview-img");
+              preview.appendChild(img); // プレビューエリアに画像を追加
+          };
+          reader.readAsDataURL(file); // ファイルを読み込んでプレビュー表示
+      }
+  }
+
+  // 既存のプレビューを削除する関数
+  function removeImagePreview() {
+      const existingImage = document.getElementById("previewImage");
+      if (existingImage) {
+          existingImage.remove();
+      }
+  }
 </script>
 @endsection

@@ -124,7 +124,7 @@
   justify-content: space-between;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 825px) {
   .main {
     width: 90vw;
     margin: 20px auto;
@@ -132,6 +132,10 @@
 
   .header-forms {
     display: block;
+  }
+
+  #sort-form__select {
+    width: 100%;
   }
 
   .shop-card {
