@@ -1,6 +1,6 @@
 # 飲食店予約サービスRese
 飲食店の予約サービスシステムです。
-<img width="1710" alt="rese_index" src="https://github.com/user-attachments/assets/902282a3-5a36-4dd8-8797-014ad0ab5ad4">
+![newUI](https://github.com/user-attachments/assets/68e337d2-748d-409f-a264-2e708814c206)
 
 ## 作成した目的
 ある企業のグループ会社の飲食店予約をするために作成しました。
