@@ -33,9 +33,14 @@
 - スケジューラー
   - 認証メールアドレス送信後、60分以内に会員登録されなければusersテーブルよりユーザーを自動削除
   - 毎朝7時に本日の予約があるユーザーにリマインダーメール送信
+- 口コミ機能
+  - 一般利用者は口コミ投稿及び自身の口コミの編集・削除が可能
+  - 管理者は全ての口コミを削除可能
+- 店舗一覧ソート機能
+- CSVインポート機能（管理者権限）
 
 ## 使用技術
-- PHP 7.4.9
+- PHP 8.3.13
 - Laravel Framework 8.83.27
 - MySQL  8.0.26
 
@@ -46,11 +51,11 @@
 <img width="878" alt="Rese_ER" src="https://github.com/user-attachments/assets/9c4a0ef4-93db-4fcb-a9f0-90fcd24d7e62">
 
 ## 環境構築
-Dockerビルド
+- Dockerビルド
 1. git clone リンク
 2. docker compose up -d --build
 
-Laravel環境構築
+- Laravel環境構築
 1. docker-compose exec php bash
 2. composer install
 3. composer require simplesoftwareio/simple-qrcode
@@ -74,3 +79,8 @@ Laravel環境構築
   - 店舗代表者「shop@test」
   - 一般利用者「user@test」
 - パスワード「password」(全アカウント共通)
+
+## CSVインポート機能について
+下記のようなCSVファイルを作成しインポートすることで、店舗作成をすることができます。
+![csv_example](https://github.com/user-attachments/assets/f9be6c99-21ba-4ae3-8fa3-9f2a6b34b22f)
+エリアIDとジャンルIDはareasテーブルとcategoriesテーブルのIDにそれぞれ対応します。
