@@ -1,0 +1,39 @@
+.main {
+  margin: 30px auto;
+  width: 80vw;
+  max-width: 900px;
+  box-shadow: 2px 2px 4px #6c6b6b;
+  background-color: white;
+  padding-bottom: 10px;
+}
+
+.import-form {
+  text-align: center;
+}
+
+h2.title {
+  padding: 10px;
+  background-color: rgb(58, 103, 250);
+  color: white;
+  border-radius: 3px 3px 0 0;
+}
+
+.comment {
+  margin: 0 10px;
+  text-align: left;
+}
+
+h3.subtitle {
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.button-area {
+  margin: 20px;
+}
+
+.form__error {
+  text-align: left;
+  color: red;
+  margin: 20px 25px;
+}

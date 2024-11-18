@@ -1,6 +1,6 @@
 volumes:
-  db-volume:
-  maildir: {}
+    db-volume:
+    maildir: {}
 
 services:
     nginx:

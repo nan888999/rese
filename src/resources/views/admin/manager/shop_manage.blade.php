@@ -43,7 +43,7 @@
 
 @section('main')
 <!-- Add モーダル ここから -->
-<div class="shop_register">
+<div class="shop-register-menu">
   <button class="common-btn modal--open">Shop Registration</button>
   <div class="easy-modal modal" id="add-shop-modal">
     <div class="modal__content">
@@ -115,6 +115,14 @@
       </div>
     </div>
   </div>
+  <!-- モーダル終わり -->
+  @if($user_role == 1)
+    <div class="csv-input-form">
+      <button class="common-btn">
+        <a href="/admin/import_csv" class="common-btn-link">Import CSV</a>
+      </button>
+    </div>
+  @endif
 </div>
 
 <div class="contents">

@@ -34,17 +34,19 @@ class AdminController extends Controller
 
     public function viewShopManage(Request $request)
     {
+        $user_role = Auth::user()->role;
         // 検索フォーム表示
         $shops = Shop::with(['area', 'category'])->select('id', 'name', 'area_id', 'category_id', 'detail', 'img_url')->get();
 
         $areas = Area::select('id', 'name')->get();
         $categories = Category::select('id', 'name')->get();
 
-        return view('admin.manager.shop_manage', compact('shops', 'areas', 'categories'));
+        return view('admin.manager.shop_manage', compact('user_role', 'shops', 'areas', 'categories'));
     }
 
     public function search (Request $request)
     {
+        $user_role = Auth::user()->role;
         $query = Shop::query();
 
         /* area検索 */
@@ -69,7 +71,7 @@ class AdminController extends Controller
 
         $shops = $query->get();
 
-        return view ('admin.manager.shop_manage', compact('shops', 'areas', 'area_id', 'keyword', 'categories', 'category_id'));
+        return view ('admin.manager.shop_manage', compact('user_role', 'shops', 'areas', 'area_id', 'keyword', 'categories', 'category_id'));
     }
 
     public function addShop(ManageShopRequest $request)

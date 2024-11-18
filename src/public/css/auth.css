@@ -31,9 +31,8 @@ input:focus {
   border-bottom-color: skyblue;
 }
 
-.auth-btn {
-  display: block;
-  margin: 15px 0 0 auto;
+.button-area {
+  text-align: right;
 }
 
 .login-form,

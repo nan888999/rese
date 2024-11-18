@@ -31,6 +31,8 @@
     <i class="fa-solid fa-lock gray-icon"></i>
     <input type="password" name="password_confirmation" placeholder="Password Confirmation" value="{{ old('password_confirmation') }}">
   </div>
-  <button type="submit" class="common-btn auth-btn">登録</button>
+  <div class="button-area">
+    <button type="submit" class="common-btn">登録</button>
+  </div>
 </form>
 @endsection

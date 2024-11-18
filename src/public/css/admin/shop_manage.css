@@ -38,6 +38,12 @@
   text-align: right;
 }
 
+.shop-register-menu {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
 /* modal */
 .modal {
   display: none;
@@ -93,4 +99,26 @@
 .modal__body {
   padding: 10px 20px;
   color: black;
+}
+
+@media screen and (max-width: 729px) {
+  .header__items {
+    display: block;
+    margin: 20px 8vw;
+  }
+
+  .search-form__keyword {
+    width: 80%;
+  }
+
+  #area-select,
+  #category-select {
+    width: 95%;
+    padding: 10px 20px;
+  }
+
+  .search-form::before,
+  .search-form::after {
+    display: none;
+  }
 }

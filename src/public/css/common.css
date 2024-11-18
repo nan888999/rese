@@ -138,18 +138,17 @@ span.hamburger-menu__bar {
   color: red;
 }
 
-.common-btn {
+button.common-btn {
   background-color: rgb(58, 103, 250);
   color: white;
-  padding: 5px 10px;
+  font-size: 14px;
   border: none;
   border-radius: 3px;
   display: inline-block;
+  padding: 5px 10px;
 }
 
-.common-btn:focus,
-.common-btn:active,
-.common-btn:hover {
+button.common-btn:where(:focus, :active, :hover) {
   background-color: blue;
 }
 

@@ -19,6 +19,8 @@
       <i class="fa-solid fa-envelope gray-icon"></i>
       <input type="text" name="email" placeholder="Email" placeholder="{{ old('email') }}">
     </div>
+  <div class="button-area">
     <button class=" common-btn auth-btn" type="submit">メール送信</button>
+  </div>
   </form>
 @endsection

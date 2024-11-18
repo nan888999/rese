@@ -15,7 +15,7 @@ class ManageShopRequest extends FormRequest
     public function rules()
     {
         return [
-                'name' => 'required | string | between:2,20 | regex:/^[^#<>^;_]*$/',
+                'name' => 'required | string | max:50 | regex:/^[^#<>^;_]*$/',
                 'area_id' => 'required | integer | regex:/^[0-9]$/',
                 'category_id' => 'required | integer | regex:/^[0-9]$/',
                 'detail' => 'nullable | string | max:200',
@@ -28,7 +28,7 @@ class ManageShopRequest extends FormRequest
         return [
             'name.required' => '店舗名を入力してください',
             'name.string' => '文字列で入力してください',
-            'name.between' => '2字以上20字以下で入力してください',
+            'name.max' => '50字以下で入力してください',
             'name.regex' => '特殊記号は使用しないでください',
             'area_id.required' => 'エリアを選択してください',
             'area_id.integer' => 'エリアIDは整数を指定してください',

@@ -6,6 +6,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\CsvController;
 
 Route::get('/login', [UserController::class, 'viewLogin']);
 Route::post('/login', [UserController::class, 'login'])->name('login');
@@ -92,4 +93,7 @@ Route::middleware(['check.admin'])->group(function() {
   Route::post('/admin/mail', [AdminController::class, 'sendAdminMail']);
 
   Route::get('/admin/feedback/delete', [AdminController::class, 'deleteFeedback']);
+
+  Route::get('/admin/import_csv', [CsvController::class, 'viewImportCsv']);
+  Route::post('/admin/import_csv', [CsvController::class, 'importCsv']);
 });
