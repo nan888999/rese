@@ -45,10 +45,10 @@
 - MySQL  8.0.26
 
 ## テーブル設計
-<img width="1292" alt="rese_tables" src="https://github.com/user-attachments/assets/71a72ab1-a268-4541-bb47-5102107ad3d6">
+![newTables](https://github.com/user-attachments/assets/6dba087f-30d4-4703-b236-3863c35d8272)
 
 ## ER図
-<img width="878" alt="Rese_ER" src="https://github.com/user-attachments/assets/9c4a0ef4-93db-4fcb-a9f0-90fcd24d7e62">
+![newER](https://github.com/user-attachments/assets/9bcf1b8b-fb30-468c-940d-d46af36e2e6c)
 
 ## 環境構築
 - Dockerビルド
@@ -82,5 +82,6 @@
 
 ## CSVインポート機能について
 下記のようなCSVファイルを作成しインポートすることで、店舗作成をすることができます。
-![csv_example](https://github.com/user-attachments/assets/f9be6c99-21ba-4ae3-8fa3-9f2a6b34b22f)
 エリアIDとジャンルIDはareasテーブルとcategoriesテーブルのIDにそれぞれ対応します。
+
+![csv_example](https://github.com/user-attachments/assets/f9be6c99-21ba-4ae3-8fa3-9f2a6b34b22f)
